@@ -1,0 +1,382 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>About – SmartCity Solapur</title>
+    <meta name="description"
+        content="Learn about the Solapur Smart Traffic and Parking Management System - problem statement, solution, benefits, and future scope." />
+    <link
+        href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=Orbitron:wght@400;700;900&display=swap"
+        rel="stylesheet" />
+    <link rel="stylesheet" href="css/style.css" />
+    <link rel="stylesheet" href="css/home.css" />
+</head>
+
+<body>
+    <nav class="navbar" id="navbar">
+        <div class="nav-container">
+            <a href="index.html" class="nav-brand">
+                <div class="brand-icon"><svg viewBox="0 0 40 40" fill="none">
+                        <circle cx="20" cy="20" r="18" stroke="url(#gabt1)" stroke-width="2" />
+                        <path d="M10 28 L15 16 L20 22 L25 14 L30 28" stroke="url(#gabt2)" stroke-width="2.5"
+                            stroke-linecap="round" stroke-linejoin="round" />
+                        <circle cx="20" cy="12" r="3" fill="#00d4ff" />
+                        <defs>
+                            <linearGradient id="gabt1" x1="0" y1="0" x2="40" y2="40">
+                                <stop offset="0%" stop-color="#00d4ff" />
+                                <stop offset="100%" stop-color="#7c3aed" />
+                            </linearGradient>
+                            <linearGradient id="gabt2" x1="0" y1="0" x2="40" y2="40">
+                                <stop offset="0%" stop-color="#00d4ff" />
+                                <stop offset="100%" stop-color="#a855f7" />
+                            </linearGradient>
+                        </defs>
+                    </svg></div>
+                <div class="brand-text"><span class="brand-main">SmartCity</span><span class="brand-sub">Solapur</span>
+                </div>
+            </a>
+            <div class="nav-links" id="navLinks">
+                <a href="index.html" class="nav-link" id="nav-home">Home</a>
+                <a href="traffic.html" class="nav-link" id="nav-traffic">Traffic</a>
+                <a href="parking.html" class="nav-link" id="nav-parking">Parking</a>
+                <a href="analytics.html" class="nav-link" id="nav-analytics">Analytics</a>
+                <a href="admin.html" class="nav-link" id="nav-admin">Admin</a>
+                <a href="citizen.html" class="nav-link" id="nav-citizen">Citizens</a>
+                <a href="about.html" class="nav-link active" id="nav-about">About</a>
+            </div>
+            <div class="nav-actions"><button class="theme-toggle" id="themeToggle"><svg id="moonIcon"
+                        viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z" />
+                    </svg><svg id="sunIcon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                        style="display:none">
+                        <circle cx="12" cy="12" r="5" />
+                    </svg></button><button class="sos-btn" id="sosBtn">🆘 SOS</button><button class="hamburger"
+                    id="hamburger"><span></span><span></span><span></span></button></div>
+        </div>
+    </nav>
+    <div id="sosModal" class="modal-overlay">
+        <div class="modal sos-modal">
+            <div class="sos-pulse"></div>
+            <h2>🚨 Emergency SOS</h2>
+            <p>Emergency alert sending...</p>
+            <div class="sos-actions"><button class="btn btn-danger" onclick="callEmergency()">📞 Call
+                    112</button><button class="btn btn-outline" onclick="closeSOS()">Cancel</button></div>
+        </div>
+    </div>
+
+    <!-- Hero -->
+    <section class="hero" style="min-height:60vh">
+        <div id="particles" class="particles"></div>
+        <div class="hero-grid-overlay"></div>
+        <div class="container" style="position:relative;z-index:2;padding-top:6rem;text-align:center">
+            <div class="hero-badge" style="margin:0 auto 1.5rem;width:fit-content">🏙️ Smart City Hackathon 2025</div>
+            <h1
+                style="font-family:var(--font-display);font-size:clamp(2rem,6vw,4rem);font-weight:900;margin-bottom:1rem;background:linear-gradient(135deg,#00d4ff,#a855f7,#22c55e);-webkit-background-clip:text;-webkit-text-fill-color:transparent">
+                Smart Traffic & Parking<br>Management System</h1>
+            <p style="font-size:1.1rem;color:var(--text-secondary);max-width:600px;margin:0 auto 2rem">Solapur Municipal
+                Corporation · IoT-powered · AI-driven · Citizen-centric smart mobility solution</p>
+            <div style="display:flex;gap:1rem;justify-content:center;flex-wrap:wrap">
+                <a href="traffic.html" class="btn btn-primary">View Dashboard →</a>
+                <a href="#problem" class="btn btn-outline">Learn More</a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Problem Statement -->
+    <section id="problem" class="section" style="padding:5rem 0">
+        <div class="container">
+            <div class="section-header">
+                <div class="section-tag">🔴 The Problem</div>
+                <h2 class="section-title">Solapur's Traffic Crisis</h2>
+                <p class="section-subtitle">Solapur, with a population of 1.2 million, faces serious traffic challenges
+                    that impact daily life, economy, and environment.</p>
+            </div>
+            <div
+                style="display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:1.5rem;margin-top:3rem">
+                <div class="feature-card">
+                    <div class="feature-icon" style="--icon-color:linear-gradient(135deg,#ef4444,#dc2626)">🚗</div>
+                    <h3>Congestion Crisis</h3>
+                    <p>Key junctions like Hutatma Chowk and Station Road see 8,000+ vehicles/hour during peak time,
+                        causing 45-minute delays.</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon" style="--icon-color:linear-gradient(135deg,#f59e0b,#d97706)">🅿️</div>
+                    <h3>Parking Chaos</h3>
+                    <p>No centralized parking system leads to 20% of city traffic being cars circling for parking,
+                        causing secondary congestion.</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon" style="--icon-color:linear-gradient(135deg,#8b5cf6,#7c3aed)">🚦</div>
+                    <h3>Fixed Signal Timings</h3>
+                    <p>Static signal timers don't adapt to real-time traffic. Vehicles wait at red lights even when
+                        intersections are empty.</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon" style="--icon-color:linear-gradient(135deg,#22c55e,#16a34a)">💨</div>
+                    <h3>Pollution</h3>
+                    <p>Traffic congestion increases vehicle idle time, raising PM2.5 levels to 45–80 μg/m³ (3-5× safe
+                        limits in peak hours).</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon" style="--icon-color:linear-gradient(135deg,#ef4444,#dc2626)">🚑</div>
+                    <h3>Emergency Delays</h3>
+                    <p>No priority system for ambulances and fire engines leads to critical delays through congested
+                        corridors.</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon" style="--icon-color:linear-gradient(135deg,#00d4ff,#0ea5e9)">📵</div>
+                    <h3>No Digital Tools</h3>
+                    <p>Citizens lack real-time information about traffic conditions, available parking, or alternate
+                        routes.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Solution -->
+    <section class="section" style="padding:5rem 0;background:var(--bg-secondary)">
+        <div class="container">
+            <div class="section-header">
+                <div class="section-tag">💡 Our Solution</div>
+                <h2 class="section-title">Intelligent Smart City Platform</h2>
+                <p class="section-subtitle">An integrated IoT + AI platform that transforms Solapur's traffic and
+                    parking into an intelligent, citizen-friendly system.</p>
+            </div>
+            <div style="display:grid;grid-template-columns:1fr 1fr;gap:3rem;margin-top:3rem;align-items:center">
+                <div>
+                    <h3 style="color:var(--accent-cyan);margin-bottom:1.5rem;font-size:1.4rem">How It Works</h3>
+                    <div style="display:flex;flex-direction:column;gap:1.25rem">
+                        <div style="display:flex;gap:1rem;align-items:flex-start">
+                            <div
+                                style="width:36px;height:36px;border-radius:50%;background:linear-gradient(135deg,#00d4ff,#7c3aed);display:flex;align-items:center;justify-content:center;flex-shrink:0;font-size:.9rem;font-weight:700">
+                                1</div>
+                            <div>
+                                <h4 style="font-size:1rem;margin-bottom:.35rem">IoT Sensor Network</h4>
+                                <p style="font-size:.875rem;color:var(--text-muted)">432 sensors across all major
+                                    junctions, parking zones, and arterial roads collect real-time vehicle count, speed,
+                                    and density data.</p>
+                            </div>
+                        </div>
+                        <div style="display:flex;gap:1rem;align-items:flex-start">
+                            <div
+                                style="width:36px;height:36px;border-radius:50%;background:linear-gradient(135deg,#a855f7,#ec4899);display:flex;align-items:center;justify-content:center;flex-shrink:0;font-size:.9rem;font-weight:700">
+                                2</div>
+                            <div>
+                                <h4 style="font-size:1rem;margin-bottom:.35rem">AI Traffic Brain</h4>
+                                <p style="font-size:.875rem;color:var(--text-muted)">Machine learning algorithms analyze
+                                    traffic patterns and dynamically adjust signal timings. Emergency vehicles get
+                                    instant green corridors.</p>
+                            </div>
+                        </div>
+                        <div style="display:flex;gap:1rem;align-items:flex-start">
+                            <div
+                                style="width:36px;height:36px;border-radius:50%;background:linear-gradient(135deg,#22c55e,#06b6d4);display:flex;align-items:center;justify-content:center;flex-shrink:0;font-size:.9rem;font-weight:700">
+                                3</div>
+                            <div>
+                                <h4 style="font-size:1rem;margin-bottom:.35rem">Smart Parking</h4>
+                                <p style="font-size:.875rem;color:var(--text-muted)">Ultrasonic sensors in 400 parking
+                                    slots provide real-time availability. Citizens book slots from mobile app with QR
+                                    tickets.</p>
+                            </div>
+                        </div>
+                        <div style="display:flex;gap:1rem;align-items:flex-start">
+                            <div
+                                style="width:36px;height:36px;border-radius:50%;background:linear-gradient(135deg,#f59e0b,#ef4444);display:flex;align-items:center;justify-content:center;flex-shrink:0;font-size:.9rem;font-weight:700">
+                                4</div>
+                            <div>
+                                <h4 style="font-size:1rem;margin-bottom:.35rem">Citizen App & Dashboard</h4>
+                                <p style="font-size:.875rem;color:var(--text-muted)">Web and mobile portal for real-time
+                                    alerts, route planning, issue reporting, and parking bookings. Admin control room
+                                    for operators.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div style="background:var(--bg-card);border:1px solid var(--border);border-radius:20px;padding:2rem">
+                    <h4 style="color:var(--accent-cyan);margin-bottom:1.5rem;text-align:center">Tech Stack</h4>
+                    <div style="display:grid;grid-template-columns:repeat(2,1fr);gap:1rem">
+                        <div
+                            style="padding:.85rem;background:rgba(0,212,255,.08);border:1px solid rgba(0,212,255,.2);border-radius:12px;text-align:center">
+                            <div style="font-size:1.5rem;margin-bottom:.35rem">📡</div>
+                            <div style="font-weight:600;font-size:.85rem">IoT Sensors</div>
+                            <div style="font-size:.75rem;color:var(--text-muted)">LoRa + WiFi</div>
+                        </div>
+                        <div
+                            style="padding:.85rem;background:rgba(168,85,247,.08);border:1px solid rgba(168,85,247,.2);border-radius:12px;text-align:center">
+                            <div style="font-size:1.5rem;margin-bottom:.35rem">🤖</div>
+                            <div style="font-weight:600;font-size:.85rem">AI/ML Engine</div>
+                            <div style="font-size:.75rem;color:var(--text-muted)">Python TensorFlow</div>
+                        </div>
+                        <div
+                            style="padding:.85rem;background:rgba(245,158,11,.08);border:1px solid rgba(245,158,11,.2);border-radius:12px;text-align:center">
+                            <div style="font-size:1.5rem;margin-bottom:.35rem">☁️</div>
+                            <div style="font-weight:600;font-size:.85rem">Cloud Backend</div>
+                            <div style="font-size:.75rem;color:var(--text-muted)">AWS / GCP</div>
+                        </div>
+                        <div
+                            style="padding:.85rem;background:rgba(34,197,94,.08);border:1px solid rgba(34,197,94,.2);border-radius:12px;text-align:center">
+                            <div style="font-size:1.5rem;margin-bottom:.35rem">📱</div>
+                            <div style="font-weight:600;font-size:.85rem">Mobile App</div>
+                            <div style="font-size:.75rem;color:var(--text-muted)">React Native</div>
+                        </div>
+                        <div
+                            style="padding:.85rem;background:rgba(0,212,255,.08);border:1px solid rgba(0,212,255,.2);border-radius:12px;text-align:center">
+                            <div style="font-size:1.5rem;margin-bottom:.35rem">📷</div>
+                            <div style="font-weight:600;font-size:.85rem">CCTV + Vision AI</div>
+                            <div style="font-size:.75rem;color:var(--text-muted)">OpenCV / YOLO</div>
+                        </div>
+                        <div
+                            style="padding:.85rem;background:rgba(168,85,247,.08);border:1px solid rgba(168,85,247,.2);border-radius:12px;text-align:center">
+                            <div style="font-size:1.5rem;margin-bottom:.35rem">🗺️</div>
+                            <div style="font-weight:600;font-size:.85rem">Smart Maps</div>
+                            <div style="font-size:.75rem;color:var(--text-muted)">HERE Maps API</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Benefits -->
+    <section class="section" style="padding:5rem 0">
+        <div class="container">
+            <div class="section-header">
+                <div class="section-tag">✅ Benefits</div>
+                <h2 class="section-title">Impact on Solapur Citizens</h2>
+            </div>
+            <div style="display:grid;grid-template-columns:repeat(4,1fr);gap:1.5rem;margin-top:3rem">
+                <div
+                    style="text-align:center;padding:2rem;background:var(--bg-card);border:1px solid var(--border);border-radius:20px">
+                    <div
+                        style="font-family:var(--font-display);font-size:2.5rem;color:var(--accent-green);font-weight:900">
+                        35%</div>
+                    <div style="font-size:.9rem;color:var(--text-secondary);margin-top:.5rem">Reduction in commute time
+                    </div>
+                </div>
+                <div
+                    style="text-align:center;padding:2rem;background:var(--bg-card);border:1px solid var(--border);border-radius:20px">
+                    <div
+                        style="font-family:var(--font-display);font-size:2.5rem;color:var(--accent-cyan);font-weight:900">
+                        42%</div>
+                    <div style="font-size:.9rem;color:var(--text-secondary);margin-top:.5rem">Faster emergency response
+                    </div>
+                </div>
+                <div
+                    style="text-align:center;padding:2rem;background:var(--bg-card);border:1px solid var(--border);border-radius:20px">
+                    <div
+                        style="font-family:var(--font-display);font-size:2.5rem;color:var(--accent-amber);font-weight:900">
+                        ₹2.4Cr</div>
+                    <div style="font-size:.9rem;color:var(--text-secondary);margin-top:.5rem">Annual revenue potential
+                    </div>
+                </div>
+                <div
+                    style="text-align:center;padding:2rem;background:var(--bg-card);border:1px solid var(--border);border-radius:20px">
+                    <div
+                        style="font-family:var(--font-display);font-size:2.5rem;color:var(--accent-purple);font-weight:900">
+                        28%</div>
+                    <div style="font-size:.9rem;color:var(--text-secondary);margin-top:.5rem">CO₂ emission reduction
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Future Scope -->
+    <section class="section" style="padding:5rem 0;background:var(--bg-secondary)">
+        <div class="container">
+            <div class="section-header">
+                <div class="section-tag">🚀 Future Scope</div>
+                <h2 class="section-title">Road to Smart City 2030</h2>
+            </div>
+            <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:1.5rem;margin-top:3rem">
+                <div class="feature-card">
+                    <div class="feature-icon" style="--icon-color:linear-gradient(135deg,#00d4ff,#7c3aed)">🚗</div>
+                    <h3>Autonomous Vehicle Ready</h3>
+                    <p>V2X (Vehicle-to-Infrastructure) communication infrastructure for self-driving vehicle integration
+                        by 2028.</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon" style="--icon-color:linear-gradient(135deg,#22c55e,#06b6d4)">⚡</div>
+                    <h3>EV Charging Integration</h3>
+                    <p>Smart parking zones with EV charging slots that show real-time availability and booking through
+                        same portal.</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon" style="--icon-color:linear-gradient(135deg,#a855f7,#ec4899)">🌐</div>
+                    <h3>5G IoT Expansion</h3>
+                    <p>Scale from 432 to 2000+ sensors city-wide with 5G connectivity for sub-millisecond response
+                        times.</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon" style="--icon-color:linear-gradient(135deg,#f59e0b,#ef4444)">🛸</div>
+                    <h3>Drone Traffic Monitoring</h3>
+                    <p>Deploy aerial drones for real-time overhead traffic monitoring during events and festivals.</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon" style="--icon-color:linear-gradient(135deg,#00d4ff,#22c55e)">🤝</div>
+                    <h3>Regional Integration</h3>
+                    <p>Connect with Pune-Bengaluru Highway management for intercity traffic coordination and dynamic
+                        routing.</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon" style="--icon-color:linear-gradient(135deg,#7c3aed,#a855f7)">🧠</div>
+                    <h3>District-Wide AI Brain</h3>
+                    <p>Expand AI traffic optimization to entire Solapur district — 8 talukas, 1000+ km highways by 2030.
+                    </p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Team / Credits -->
+    <section class="section" style="padding:4rem 0">
+        <div class="container" style="text-align:center">
+            <div class="section-tag" style="margin:0 auto 1rem">👨‍💻 Project</div>
+            <h2 class="section-title">Built for Solapur Smart City Hackathon 2025</h2>
+            <p style="color:var(--text-muted);max-width:600px;margin:1rem auto 2rem">An innovative solution for Solapur
+                Municipal Corporation's Smart City Mission. Designed to win — built to deploy.</p>
+            <div style="display:flex;gap:1rem;justify-content:center;flex-wrap:wrap;margin-bottom:2rem">
+                <a href="traffic.html" class="btn btn-primary">🚦 Traffic Dashboard</a>
+                <a href="parking.html" class="btn btn-secondary">🅿️ Smart Parking</a>
+                <a href="analytics.html" class="btn btn-ghost">📊 Analytics</a>
+            </div>
+            <div style="font-size:.875rem;color:var(--text-muted)">
+                <strong style="color:var(--text-secondary)">Solapur Municipal Corporation</strong> · Smart City Mission,
+                Government of India<br>
+                <span style="font-size:.8rem">Data simulated for demonstration purposes only</span>
+            </div>
+        </div>
+    </section>
+
+    <div class="chatbot-widget" id="chatbotWidget">
+        <div class="chatbot-header">
+            <div class="chat-avatar">🤖</div>
+            <div>
+                <div class="chat-name">TrafficBot AI</div>
+                <div class="chat-status"><span class="live-dot"></span> Online</div>
+            </div><button class="chat-close" onclick="toggleChatbot()">×</button>
+        </div>
+        <div class="chatbot-messages" id="chatMessages">
+            <div class="chat-msg bot">
+                <div class="msg-bubble">Hello! Ask me about this project's technology, impact, or features.</div>
+            </div>
+        </div>
+        <div class="quick-replies"><button onclick="quickReply('how does it work?')">How it works</button><button
+                onclick="quickReply('tech stack')">Tech Stack</button></div>
+        <div class="chatbot-input"><input type="text" id="chatInput" placeholder="Ask anything..."
+                onkeypress="chatEnter(event)" /><button onclick="sendChat()"><svg viewBox="0 0 24 24" fill="none"
+                    stroke="currentColor" stroke-width="2">
+                    <line x1="22" y1="2" x2="11" y2="13" />
+                    <polygon points="22 2 15 22 11 13 2 9 22 2" />
+                </svg></button></div>
+    </div>
+    <button class="chatbot-toggle" id="chatbotToggle" onclick="toggleChatbot()"><span
+            class="chat-icon">💬</span></button>
+
+    <script src="js/main.js"></script>
+    <script src="js/home.js"></script>
+</body>
+
+</html>

@@ -1,0 +1,470 @@
+/* ==============================
+   PARKING PAGE STYLES (Expanded)
+   ============================== */
+
+/* ─── Parking Overview Stats ─── */
+.parking-overview {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 1rem;
+    margin-bottom: 1.5rem;
+}
+
+.park-stat {
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+    border-radius: 16px;
+    padding: 1.25rem;
+}
+
+.park-stat-num {
+    font-family: var(--font-display);
+    font-size: 2rem;
+    font-weight: 900;
+    line-height: 1;
+    margin-bottom: .35rem;
+}
+
+.park-stat-label {
+    font-size: .8rem;
+    color: var(--text-muted);
+    margin-bottom: .75rem;
+}
+
+.park-stat-prog {
+    height: 4px;
+    background: rgba(255, 255, 255, .06);
+    border-radius: 2px;
+    overflow: hidden;
+}
+
+.park-stat-prog-fill {
+    height: 100%;
+    border-radius: 2px;
+    transition: width .4s ease;
+}
+
+/* ─── Parking Map Layout ─── */
+.parking-layout {
+    display: grid;
+    grid-template-columns: 1fr 280px;
+    gap: 1.5rem;
+    margin-bottom: 2rem;
+}
+
+.parking-map-card {
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+    border-radius: 20px;
+    padding: 1.5rem;
+}
+
+.parking-map-svg {
+    display: block;
+    height: 360px;
+}
+
+.park-slot {
+    transition: all .2s;
+}
+
+.park-slot:hover {
+    filter: brightness(1.3);
+}
+
+.map-legend {
+    display: flex;
+    gap: 1.25rem;
+    flex-wrap: wrap;
+    margin-top: 1rem;
+    padding-top: .75rem;
+    border-top: 1px solid var(--border);
+    font-size: .8rem;
+}
+
+.map-leg-item {
+    display: flex;
+    align-items: center;
+    gap: .4rem;
+    color: var(--text-muted);
+}
+
+.leg-color {
+    width: 12px;
+    height: 12px;
+    border-radius: 3px;
+}
+
+.leg-available {
+    background: #22c55e;
+}
+
+.leg-occupied {
+    background: #ef4444;
+}
+
+.leg-reserved {
+    background: #f59e0b;
+}
+
+.leg-disabled {
+    background: #3b82f6;
+}
+
+/* ─── Booking Panel ─── */
+.booking-panel {
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+    border-radius: 20px;
+    padding: 2rem;
+}
+
+.step-indicator {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 2rem;
+    position: relative;
+}
+
+.step-indicator::before {
+    content: '';
+    position: absolute;
+    top: 16px;
+    left: 0;
+    right: 0;
+    height: 2px;
+    background: var(--border);
+    z-index: 0;
+}
+
+.step-dot {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: .35rem;
+    position: relative;
+    z-index: 1;
+}
+
+.step-circle {
+    width: 32px;
+    height: 32px;
+    border-radius: 50%;
+    background: var(--bg-secondary);
+    border: 2px solid var(--border);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: .85rem;
+    font-weight: 700;
+    transition: all .3s;
+}
+
+.step-name {
+    font-size: .7rem;
+    color: var(--text-muted);
+    white-space: nowrap;
+}
+
+.step-dot.active .step-circle {
+    background: linear-gradient(135deg, var(--accent-cyan), var(--accent-purple));
+    border-color: transparent;
+    color: white;
+    box-shadow: 0 0 20px rgba(0, 212, 255, .4);
+}
+
+.step-dot.done .step-circle {
+    background: var(--accent-green);
+    border-color: transparent;
+    color: white;
+}
+
+.booking-step {
+    display: none;
+}
+
+.booking-step.active {
+    display: block;
+    animation: fadeInUp .3s ease;
+}
+
+.vehicle-option {
+    transition: all .2s !important;
+}
+
+.vehicle-option:hover {
+    transform: translateY(-2px);
+}
+
+/* ─── Slots List ─── */
+.slots-list {
+    display: flex;
+    flex-direction: column;
+    gap: .5rem;
+    max-height: 220px;
+    overflow-y: auto;
+    padding-right: .25rem;
+}
+
+.slots-list::-webkit-scrollbar {
+    width: 4px;
+}
+
+.slots-list::-webkit-scrollbar-thumb {
+    background: var(--border);
+    border-radius: 2px;
+}
+
+.slot-item {
+    display: flex;
+    align-items: center;
+    gap: .75rem;
+    padding: .65rem 1rem;
+    background: var(--bg-secondary);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    cursor: pointer;
+    transition: all .2s;
+}
+
+.slot-item:hover {
+    border-color: var(--accent-cyan);
+    background: rgba(0, 212, 255, .06);
+}
+
+.slot-item.selected-slot {
+    border-color: var(--accent-cyan);
+    background: rgba(0, 212, 255, .1);
+    box-shadow: 0 0 0 1px rgba(0, 212, 255, .3);
+}
+
+.slot-num {
+    font-family: var(--font-display);
+    font-size: .95rem;
+    font-weight: 700;
+    width: 50px;
+}
+
+.slot-meta {
+    flex: 1;
+}
+
+.slot-type {
+    font-size: .75rem;
+    color: var(--text-muted);
+}
+
+.slot-status-dot {
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+    background: var(--accent-green);
+}
+
+/* ─── Cost Panel ─── */
+.cost-calc {
+    background: var(--bg-secondary);
+    border: 1px solid var(--border);
+    border-radius: 16px;
+    padding: 1.25rem;
+}
+
+.cost-row {
+    display: flex;
+    justify-content: space-between;
+    padding: .5rem 0;
+    border-bottom: 1px solid var(--border);
+    font-size: .9rem;
+    color: var(--text-secondary);
+}
+
+.cost-row:last-child {
+    border: none;
+}
+
+.cost-row.total {
+    font-weight: 700;
+    font-size: 1.1rem;
+    color: var(--text-primary);
+    padding-top: .75rem;
+}
+
+.cost-row.total span:last-child {
+    color: var(--accent-cyan);
+}
+
+/* ─── QR Ticket ─── */
+.qr-ticket {
+    background: linear-gradient(135deg, #0d1f38, #0a1628);
+    border: 2px solid rgba(0, 212, 255, .3);
+    border-radius: 20px;
+    padding: 1.5rem;
+    text-align: center;
+    max-width: 320px;
+    margin: 0 auto;
+    position: relative;
+    overflow: hidden;
+}
+
+.qr-ticket::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 4px;
+    background: linear-gradient(90deg, var(--accent-cyan), var(--accent-purple), var(--accent-green));
+}
+
+.qr-header {
+    font-family: var(--font-display);
+    font-weight: 900;
+    font-size: 1rem;
+    color: var(--accent-cyan);
+    letter-spacing: 2px;
+}
+
+.qr-sub {
+    font-size: .75rem;
+    color: var(--text-muted);
+    margin-bottom: 1rem;
+}
+
+.qr-code-img {
+    display: flex;
+    justify-content: center;
+    margin: .75rem auto;
+}
+
+.qr-code-svg {
+    width: 120px;
+    height: 120px;
+    border: 4px solid white;
+    border-radius: 8px;
+}
+
+.qr-divider {
+    border: none;
+    border-top: 1px dashed rgba(255, 255, 255, .2);
+    margin: .75rem 0;
+}
+
+.qr-details {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: .5rem;
+    text-align: left;
+    margin-bottom: .75rem;
+}
+
+.qr-detail-item {
+    background: rgba(255, 255, 255, .04);
+    border-radius: 8px;
+    padding: .4rem .6rem;
+}
+
+.qr-detail-label {
+    font-size: .62rem;
+    color: var(--text-muted);
+    letter-spacing: 1px;
+    text-transform: uppercase;
+}
+
+.qr-detail-val {
+    font-size: .85rem;
+    font-weight: 700;
+    color: var(--text-primary);
+    font-family: var(--font-display);
+}
+
+.qr-barcode {
+    margin: .5rem auto;
+}
+
+.qr-barcode-svg {
+    width: 100%;
+    height: 30px;
+    border-radius: 4px;
+    overflow: hidden;
+}
+
+/* ─── Violation Card ─── */
+.violation-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 1rem;
+}
+
+.violation-card {
+    background: var(--bg-card);
+    border: 1px solid rgba(239, 68, 68, .25);
+    border-radius: 16px;
+    padding: 1.25rem;
+}
+
+.violation-header {
+    display: flex;
+    gap: .75rem;
+    margin-bottom: .75rem;
+    align-items: flex-start;
+}
+
+.violation-img {
+    font-size: 1.8rem;
+}
+
+.violation-id {
+    font-family: var(--font-display);
+    font-size: .8rem;
+    color: var(--accent-red);
+    font-weight: 700;
+}
+
+.violation-loc {
+    font-size: .78rem;
+    color: var(--text-muted);
+}
+
+.violation-plate {
+    font-family: monospace;
+    font-size: 1.1rem;
+    font-weight: 900;
+    color: var(--text-primary);
+    background: rgba(239, 68, 68, .08);
+    border: 1px solid rgba(239, 68, 68, .2);
+    border-radius: 8px;
+    padding: .5rem .85rem;
+    letter-spacing: 2px;
+    text-align: center;
+    margin-bottom: .75rem;
+}
+
+.violation-actions {
+    display: flex;
+    gap: .5rem;
+}
+
+/* ─── Responsive ─── */
+@media (max-width: 900px) {
+    .parking-overview {
+        grid-template-columns: repeat(2, 1fr);
+    }
+
+    .parking-layout {
+        grid-template-columns: 1fr;
+    }
+
+    .violation-grid {
+        grid-template-columns: 1fr;
+    }
+}
+
+@media (max-width: 600px) {
+    .parking-overview {
+        grid-template-columns: 1fr 1fr;
+    }
+
+    .qr-ticket {
+        max-width: 100%;
+    }
+}

@@ -1,0 +1,391 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Citizen Services – SmartCity Solapur</title>
+    <meta name="description"
+        content="Citizen services - report traffic issues, get smart alerts, parking feedback, and route suggestions for Solapur Smart City." />
+    <link
+        href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=Orbitron:wght@400;700;900&display=swap"
+        rel="stylesheet" />
+    <link rel="stylesheet" href="css/style.css" />
+    <link rel="stylesheet" href="css/dashboard.css" />
+</head>
+
+<body>
+    <nav class="navbar" id="navbar">
+        <div class="nav-container">
+            <a href="index.html" class="nav-brand">
+                <div class="brand-icon"><svg viewBox="0 0 40 40" fill="none">
+                        <circle cx="20" cy="20" r="18" stroke="url(#gcit1)" stroke-width="2" />
+                        <path d="M10 28 L15 16 L20 22 L25 14 L30 28" stroke="url(#gcit2)" stroke-width="2.5"
+                            stroke-linecap="round" stroke-linejoin="round" />
+                        <circle cx="20" cy="12" r="3" fill="#00d4ff" />
+                        <defs>
+                            <linearGradient id="gcit1" x1="0" y1="0" x2="40" y2="40">
+                                <stop offset="0%" stop-color="#00d4ff" />
+                                <stop offset="100%" stop-color="#7c3aed" />
+                            </linearGradient>
+                            <linearGradient id="gcit2" x1="0" y1="0" x2="40" y2="40">
+                                <stop offset="0%" stop-color="#00d4ff" />
+                                <stop offset="100%" stop-color="#a855f7" />
+                            </linearGradient>
+                        </defs>
+                    </svg></div>
+                <div class="brand-text"><span class="brand-main">SmartCity</span><span class="brand-sub">Solapur</span>
+                </div>
+            </a>
+            <div class="nav-links" id="navLinks">
+                <a href="index.html" class="nav-link" id="nav-home">Home</a>
+                <a href="traffic.html" class="nav-link" id="nav-traffic">Traffic</a>
+                <a href="parking.html" class="nav-link" id="nav-parking">Parking</a>
+                <a href="analytics.html" class="nav-link" id="nav-analytics">Analytics</a>
+                <a href="admin.html" class="nav-link" id="nav-admin">Admin</a>
+                <a href="citizen.html" class="nav-link active" id="nav-citizen">Citizens</a>
+                <a href="about.html" class="nav-link" id="nav-about">About</a>
+            </div>
+            <div class="nav-actions"><button class="theme-toggle" id="themeToggle"><svg id="moonIcon"
+                        viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z" />
+                    </svg><svg id="sunIcon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                        style="display:none">
+                        <circle cx="12" cy="12" r="5" />
+                    </svg></button><button class="sos-btn" id="sosBtn">🆘 SOS</button><button class="hamburger"
+                    id="hamburger"><span></span><span></span><span></span></button></div>
+        </div>
+    </nav>
+    <div id="sosModal" class="modal-overlay">
+        <div class="modal sos-modal">
+            <div class="sos-pulse"></div>
+            <h2>🚨 Emergency SOS</h2>
+            <p>Emergency alert sending...</p>
+            <div class="sos-actions"><button class="btn btn-danger" onclick="callEmergency()">📞 Call
+                    112</button><button class="btn btn-outline" onclick="closeSOS()">Cancel</button></div>
+        </div>
+    </div>
+
+    <div class="page-wrapper">
+        <div class="page-hero">
+            <div class="container">
+                <div class="page-hero-content">
+                    <div>
+                        <h1>👥 Citizen Services Portal</h1>
+                        <p>Report issues · Get alerts · Traffic tips · Feedback · Smart travel suggestions</p>
+                    </div>
+                    <div class="page-hero-actions">
+                        <span class="badge badge-online"><span class="live-dot"></span> 24/7 Available</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="container" style="padding-top:2rem;padding-bottom:3rem">
+
+            <!-- Quick Services Tabs -->
+            <div style="margin-bottom:1.5rem">
+                <div class="tabs" style="max-width:600px">
+                    <button class="tab active" onclick="showCitizenTab('alerts',this)">🔔 Live Alerts</button>
+                    <button class="tab" onclick="showCitizenTab('report',this)">📝 Report Issue</button>
+                    <button class="tab" onclick="showCitizenTab('routes',this)">🗺️ Smart Routes</button>
+                    <button class="tab" onclick="showCitizenTab('feedback',this)">⭐ Feedback</button>
+                </div>
+            </div>
+
+            <!-- ALERTS TAB -->
+            <div id="ctab-alerts">
+                <div style="display:grid;grid-template-columns:2fr 1fr;gap:1.5rem">
+                    <div>
+                        <div class="card" style="margin-bottom:1.5rem">
+                            <div class="card-header">
+                                <div class="card-title">🔔 Today's Traffic Alerts</div>
+                                <span class="badge badge-danger">5 Active</span>
+                            </div>
+                            <div style="display:flex;flex-direction:column;gap:.75rem" id="citizenAlerts">
+                                <!-- JS -->
+                            </div>
+                        </div>
+                        <div class="card">
+                            <div class="card-header">
+                                <div class="card-title">💡 Smart Travel Suggestions</div>
+                            </div>
+                            <div style="display:flex;flex-direction:column;gap:1rem" id="travelTips">
+                                <!-- JS -->
+                            </div>
+                        </div>
+                    </div>
+                    <div>
+                        <div class="card" style="margin-bottom:1rem">
+                            <div class="card-header">
+                                <div class="card-title">⚡ Quick Numbers</div>
+                            </div>
+                            <div style="display:flex;flex-direction:column;gap:.5rem">
+                                <a href="tel:112" class="alert-item critical"
+                                    style="text-decoration:none;display:flex;align-items:center;gap:.75rem;padding:.75rem;border-radius:8px">
+                                    <span style="font-size:1.4rem">🚨</span>
+                                    <div>
+                                        <div style="font-weight:600;font-size:.9rem">Emergency</div>
+                                        <div style="font-size:.75rem;color:var(--accent-red)">112</div>
+                                    </div>
+                                </a>
+                                <a href="tel:100" class="alert-item warning"
+                                    style="text-decoration:none;display:flex;align-items:center;gap:.75rem;padding:.75rem;border-radius:8px">
+                                    <span style="font-size:1.4rem">🚔</span>
+                                    <div>
+                                        <div style="font-weight:600;font-size:.9rem">Police</div>
+                                        <div style="font-size:.75rem;color:var(--accent-amber)">100</div>
+                                    </div>
+                                </a>
+                                <a href="tel:108" class="alert-item info"
+                                    style="text-decoration:none;display:flex;align-items:center;gap:.75rem;padding:.75rem;border-radius:8px">
+                                    <span style="font-size:1.4rem">🏥</span>
+                                    <div>
+                                        <div style="font-weight:600;font-size:.9rem">Ambulance</div>
+                                        <div style="font-size:.75rem;color:var(--accent-cyan)">108</div>
+                                    </div>
+                                </a>
+                                <a href="tel:1800123456" class="alert-item success"
+                                    style="text-decoration:none;display:flex;align-items:center;gap:.75rem;padding:.75rem;border-radius:8px">
+                                    <span style="font-size:1.4rem">🚦</span>
+                                    <div>
+                                        <div style="font-weight:600;font-size:.9rem">Traffic Helpline</div>
+                                        <div style="font-size:.75rem;color:var(--accent-green)">1800-SMC-SOLAPUR</div>
+                                    </div>
+                                </a>
+                            </div>
+                        </div>
+                        <div class="card">
+                            <div class="card-header">
+                                <div class="card-title">📊 Today's Stats</div>
+                            </div>
+                            <div style="display:flex;flex-direction:column;gap:.75rem" id="todayStats"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- REPORT ISSUE TAB -->
+            <div id="ctab-report" style="display:none;max-width:700px">
+                <div class="card">
+                    <h3 style="margin-bottom:1.5rem">📝 Report Traffic / Parking Issue</h3>
+                    <div style="display:grid;grid-template-columns:1fr 1fr;gap:1rem">
+                        <div class="form-group">
+                            <label class="form-label">Issue Type *</label>
+                            <select class="form-select" id="issueType">
+                                <option>🚦 Signal malfunction</option>
+                                <option>🚗 Illegal parking</option>
+                                <option>🏗️ Road damage / pothole</option>
+                                <option>🚨 Accident</option>
+                                <option>🚧 Road block</option>
+                                <option>🏎️ Overspeeding vehicle</option>
+                                <option>📡 Sensor not working</option>
+                                <option>💡 Other</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label class="form-label">Location *</label>
+                            <select class="form-select" id="issueLocation">
+                                <option>Hutatma Chowk</option>
+                                <option>Station Road</option>
+                                <option>Akkalkot Road</option>
+                                <option>Vijapur Road</option>
+                                <option>Market Area</option>
+                                <option>Hotgi Road</option>
+                                <option>Osmanabad Road</option>
+                                <option>Bus Stand Area</option>
+                                <option>Other location</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label">Description *</label>
+                        <textarea class="form-textarea" id="issueDesc"
+                            placeholder="Describe the issue in detail..."></textarea>
+                    </div>
+                    <div style="display:grid;grid-template-columns:1fr 1fr;gap:1rem">
+                        <div class="form-group">
+                            <label class="form-label">Your Name</label>
+                            <input class="form-input" id="reportName" placeholder="Optional - for follow-up" />
+                        </div>
+                        <div class="form-group">
+                            <label class="form-label">Mobile Number</label>
+                            <input class="form-input" id="reportPhone" placeholder="+91 XXXXX XXXXX" />
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label">Priority</label>
+                        <div style="display:flex;gap:.75rem">
+                            <label style="display:flex;align-items:center;gap:.4rem;cursor:pointer"><input type="radio"
+                                    name="priority" value="low" style="accent-color:var(--accent-cyan)"> Low</label>
+                            <label style="display:flex;align-items:center;gap:.4rem;cursor:pointer"><input type="radio"
+                                    name="priority" value="medium" checked style="accent-color:var(--accent-amber)">
+                                Medium</label>
+                            <label style="display:flex;align-items:center;gap:.4rem;cursor:pointer"><input type="radio"
+                                    name="priority" value="high" style="accent-color:var(--accent-red)"> High /
+                                Urgent</label>
+                        </div>
+                    </div>
+                    <!-- Photo Upload Sim -->
+                    <div class="form-group">
+                        <label class="form-label">Attach Photo (optional)</label>
+                        <div onclick="simulateUpload(this)"
+                            style="border:2px dashed var(--border);border-radius:12px;padding:2rem;text-align:center;cursor:pointer;transition:.2s;"
+                            onmouseover="this.style.borderColor='var(--accent-cyan)'"
+                            onmouseout="this.style.borderColor='var(--border)'">
+                            <div style="font-size:2rem;margin-bottom:.5rem">📷</div>
+                            <div style="color:var(--text-muted);font-size:.875rem">Click to upload image or drag & drop
+                            </div>
+                            <div style="font-size:.75rem;color:var(--text-muted);margin-top:.25rem">JPG, PNG up to 10 MB
+                            </div>
+                            <div id="uploadStatus" style="display:none;margin-top:.75rem;color:var(--accent-green)">✅
+                                Photo attached</div>
+                        </div>
+                    </div>
+                    <div style="display:flex;gap:.75rem">
+                        <button class="btn btn-primary" style="flex:2" onclick="submitReport()">📨 Submit
+                            Report</button>
+                        <button class="btn btn-ghost" style="flex:1" onclick="clearForm()">Clear</button>
+                    </div>
+
+                    <!-- Success Panel -->
+                    <div id="reportSuccess"
+                        style="display:none;margin-top:1.5rem;padding:1.5rem;background:rgba(34,197,94,.08);border:1px solid rgba(34,197,94,.2);border-radius:12px;text-align:center">
+                        <div style="font-size:2.5rem;margin-bottom:.75rem">✅</div>
+                        <h3 style="color:var(--accent-green)">Report Submitted!</h3>
+                        <p style="color:var(--text-secondary);font-size:.9rem;margin:.5rem 0">Your complaint has been
+                            logged. Complaint ID: <strong id="rptId" style="color:var(--accent-cyan)">CMP-1234</strong>
+                        </p>
+                        <p style="color:var(--text-muted);font-size:.8rem">Expect response within 2 hours. You'll
+                            receive SMS updates.</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- ROUTES TAB -->
+            <div id="ctab-routes" style="display:none">
+                <div style="display:grid;grid-template-columns:1fr 1fr;gap:1.5rem">
+                    <div class="card">
+                        <h3 style="margin-bottom:1.25rem">🗺️ Smart Route Planner</h3>
+                        <div class="form-group"><label class="form-label">From</label>
+                            <select class="form-select" id="routeFrom">
+                                <option>Solapur Railway Station</option>
+                                <option>Bus Stand (MSRTC)</option>
+                                <option>Hutatma Chowk</option>
+                                <option>Market Area</option>
+                                <option>Hotgi Road</option>
+                            </select>
+                        </div>
+                        <div class="form-group"><label class="form-label">To</label>
+                            <select class="form-select" id="routeTo">
+                                <option>Civil Hospital</option>
+                                <option>Solapur Airport</option>
+                                <option>Osmanabad Road</option>
+                                <option>Akkalkot</option>
+                                <option>Bhigwan</option>
+                            </select>
+                        </div>
+                        <div class="form-group"><label class="form-label">Leave at</label>
+                            <select class="form-select">
+                                <option>Now</option>
+                                <option>In 30 min</option>
+                                <option>In 1 hour</option>
+                                <option>Custom time</option>
+                            </select>
+                        </div>
+                        <button class="btn btn-primary" style="width:100%" onclick="getRoute()">🔍 Find Best
+                            Route</button>
+
+                        <div id="routeResult" style="display:none;margin-top:1.25rem">
+                            <h4 style="margin-bottom:.75rem;color:var(--accent-cyan)">Suggested Routes</h4>
+                            <div style="display:flex;flex-direction:column;gap:.75rem" id="routeList"></div>
+                        </div>
+                    </div>
+                    <div class="card">
+                        <h3 style="margin-bottom:1.25rem">📡 Current Zone Status</h3>
+                        <div style="display:flex;flex-direction:column;gap:.75rem" id="zoneStatus"><!-- JS --></div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- FEEDBACK TAB -->
+            <div id="ctab-feedback" style="display:none;max-width:600px">
+                <div class="card">
+                    <h3 style="margin-bottom:1.5rem">⭐ Rate Your Experience</h3>
+                    <div class="form-group">
+                        <label class="form-label">Service</label>
+                        <select class="form-select" id="feedService">
+                            <option>Traffic Signal Management</option>
+                            <option>Smart Parking System</option>
+                            <option>AI Route Suggestions</option>
+                            <option>Citizen Services App</option>
+                            <option>Complaint Resolution</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label">Rating</label>
+                        <div id="starRating" style="display:flex;gap:.5rem;font-size:2rem;cursor:pointer">
+                            <span class="star" onclick="rate(1)">⭐</span>
+                            <span class="star" onclick="rate(2)">⭐</span>
+                            <span class="star" onclick="rate(3)">⭐</span>
+                            <span class="star" onclick="rate(4)">⭐</span>
+                            <span class="star" onclick="rate(5)">⭐</span>
+                        </div>
+                        <div id="ratingLabel" style="font-size:.85rem;color:var(--text-muted);margin-top:.35rem">Click
+                            to rate</div>
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label">Your Feedback</label>
+                        <textarea class="form-textarea" id="feedText"
+                            placeholder="Tell us how we can improve Solapur's traffic & parking management..."></textarea>
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label">Name (optional)</label>
+                        <input class="form-input" id="feedName" placeholder="Your name" />
+                    </div>
+                    <button class="btn btn-primary" style="width:100%" onclick="submitFeedback()">⭐ Submit
+                        Feedback</button>
+
+                    <!-- Recent feedback -->
+                    <div style="margin-top:2rem;padding-top:1.5rem;border-top:1px solid var(--border)">
+                        <h4 style="margin-bottom:1rem;font-size:.95rem">Recent Citizen Reviews</h4>
+                        <div style="display:flex;flex-direction:column;gap:.75rem" id="feedbackList"></div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+    <div class="chatbot-widget" id="chatbotWidget">
+        <div class="chatbot-header">
+            <div class="chat-avatar">🤖</div>
+            <div>
+                <div class="chat-name">TrafficBot AI</div>
+                <div class="chat-status"><span class="live-dot"></span> Online</div>
+            </div><button class="chat-close" onclick="toggleChatbot()">×</button>
+        </div>
+        <div class="chatbot-messages" id="chatMessages">
+            <div class="chat-msg bot">
+                <div class="msg-bubble">Hi citizen! 👋 I can help report issues, find routes, or check alerts. What do
+                    you need?</div>
+            </div>
+        </div>
+        <div class="quick-replies"><button onclick="quickReply('Report pothole')">Report Issue</button><button
+                onclick="quickReply('Best route to station?')">Best Route</button><button
+                onclick="quickReply('Traffic alerts')">Alerts</button></div>
+        <div class="chatbot-input"><input type="text" id="chatInput" placeholder="How can I help?"
+                onkeypress="chatEnter(event)" /><button onclick="sendChat()"><svg viewBox="0 0 24 24" fill="none"
+                    stroke="currentColor" stroke-width="2">
+                    <line x1="22" y1="2" x2="11" y2="13" />
+                    <polygon points="22 2 15 22 11 13 2 9 22 2" />
+                </svg></button></div>
+    </div>
+    <button class="chatbot-toggle" id="chatbotToggle" onclick="toggleChatbot()"><span class="chat-icon">💬</span><span
+            class="chat-badge" id="chatBadge">1</span></button>
+
+    <script src="js/main.js"></script>
+    <script src="js/citizen.js"></script>
+</body>
+
+</html>

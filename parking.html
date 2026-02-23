@@ -1,0 +1,462 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Smart Parking – SmartCity Solapur</title>
+    <meta name="description"
+        content="Book parking slots online, view real-time availability, detect illegal parking with Solapur Smart Parking System." />
+    <link
+        href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=Orbitron:wght@400;700;900&display=swap"
+        rel="stylesheet" />
+    <link rel="stylesheet" href="css/style.css" />
+    <link rel="stylesheet" href="css/dashboard.css" />
+    <link rel="stylesheet" href="css/parking.css" />
+</head>
+
+<body>
+    <nav class="navbar" id="navbar">
+        <div class="nav-container">
+            <a href="index.html" class="nav-brand">
+                <div class="brand-icon"><svg viewBox="0 0 40 40" fill="none">
+                        <circle cx="20" cy="20" r="18" stroke="url(#g1p)" stroke-width="2" />
+                        <path d="M10 28 L15 16 L20 22 L25 14 L30 28" stroke="url(#g2p)" stroke-width="2.5"
+                            stroke-linecap="round" stroke-linejoin="round" />
+                        <circle cx="20" cy="12" r="3" fill="#00d4ff" />
+                        <defs>
+                            <linearGradient id="g1p" x1="0" y1="0" x2="40" y2="40">
+                                <stop offset="0%" stop-color="#00d4ff" />
+                                <stop offset="100%" stop-color="#7c3aed" />
+                            </linearGradient>
+                            <linearGradient id="g2p" x1="0" y1="0" x2="40" y2="40">
+                                <stop offset="0%" stop-color="#00d4ff" />
+                                <stop offset="100%" stop-color="#a855f7" />
+                            </linearGradient>
+                        </defs>
+                    </svg></div>
+                <div class="brand-text"><span class="brand-main">SmartCity</span><span class="brand-sub">Solapur</span>
+                </div>
+            </a>
+            <div class="nav-links" id="navLinks">
+                <a href="index.html" class="nav-link" id="nav-home">Home</a>
+                <a href="traffic.html" class="nav-link" id="nav-traffic">Traffic</a>
+                <a href="parking.html" class="nav-link active" id="nav-parking">Parking</a>
+                <a href="analytics.html" class="nav-link" id="nav-analytics">Analytics</a>
+                <a href="admin.html" class="nav-link" id="nav-admin">Admin</a>
+                <a href="citizen.html" class="nav-link" id="nav-citizen">Citizens</a>
+                <a href="about.html" class="nav-link" id="nav-about">About</a>
+            </div>
+            <div class="nav-actions"><button class="theme-toggle" id="themeToggle"><svg id="moonIcon"
+                        viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z" />
+                    </svg><svg id="sunIcon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                        style="display:none">
+                        <circle cx="12" cy="12" r="5" />
+                        <line x1="12" y1="1" x2="12" y2="3" />
+                        <line x1="12" y1="21" x2="12" y2="23" />
+                    </svg></button><button class="sos-btn" id="sosBtn">🆘 SOS</button><button class="hamburger"
+                    id="hamburger"><span></span><span></span><span></span></button></div>
+        </div>
+    </nav>
+    <div id="sosModal" class="modal-overlay">
+        <div class="modal sos-modal">
+            <div class="sos-pulse"></div>
+            <h2>🚨 Emergency SOS</h2>
+            <p>Sending emergency alert to Solapur Traffic Control Center...</p>
+            <div class="sos-info">
+                <div class="sos-item"><span>📍 Location:</span> Detecting GPS...</div>
+            </div>
+            <div class="sos-actions"><button class="btn btn-danger" onclick="callEmergency()">📞 Call
+                    112</button><button class="btn btn-outline" onclick="closeSOS()">Cancel</button></div>
+        </div>
+    </div>
+
+    <div class="page-wrapper">
+        <div class="page-hero">
+            <div class="container">
+                <div class="page-hero-content">
+                    <div>
+                        <h1>🅿️ Smart Parking System</h1>
+                        <p>Real-time slot availability · Online booking · QR tickets · IoT-powered sensor network</p>
+                    </div>
+                    <div class="page-hero-actions">
+                        <span class="badge badge-online"><span class="live-dot"></span> IoT LIVE</span>
+                        <span class="live-clock badge badge-info">00:00:00</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="container" style="padding-top:2rem;padding-bottom:3rem">
+            <!-- Stats Row -->
+            <div class="parking-overview">
+                <div class="park-stat">
+                    <div class="park-stat-num" style="color:var(--accent-green)" id="availCount">284</div>
+                    <div class="park-stat-label">Available Slots</div>
+                    <div class="park-stat-prog">
+                        <div class="park-stat-prog-fill" id="availBar" style="width:71%;background:var(--accent-green)">
+                        </div>
+                    </div>
+                </div>
+                <div class="park-stat">
+                    <div class="park-stat-num" style="color:var(--accent-red)" id="occupiedCount">116</div>
+                    <div class="park-stat-label">Occupied Slots</div>
+                    <div class="park-stat-prog">
+                        <div class="park-stat-prog-fill" id="occupiedBar"
+                            style="width:29%;background:var(--accent-red)"></div>
+                    </div>
+                </div>
+                <div class="park-stat">
+                    <div class="park-stat-num" style="color:var(--accent-amber)">12</div>
+                    <div class="park-stat-label">Reserved Slots</div>
+                    <div class="park-stat-prog">
+                        <div class="park-stat-prog-fill" style="width:3%;background:var(--accent-amber)"></div>
+                    </div>
+                </div>
+                <div class="park-stat">
+                    <div class="park-stat-num" style="color:var(--accent-red)" id="illegalCount">8</div>
+                    <div class="park-stat-label">Illegal Parking</div>
+                    <div class="park-stat-prog">
+                        <div class="park-stat-prog-fill" style="width:2%;background:var(--accent-red)"></div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Tabs -->
+            <div style="margin-bottom:1.5rem">
+                <div class="tabs" style="max-width:480px">
+                    <button class="tab active" data-view="map" onclick="switchView('map',this)">🗺️ Parking Map</button>
+                    <button class="tab" data-view="book" onclick="switchView('book',this)">📋 Book Slot</button>
+                    <button class="tab" data-view="illegal" onclick="switchView('illegal',this)">🚨 Violations</button>
+                    <button class="tab" data-view="calc" onclick="switchView('calc',this)">💰 Cost Calc</button>
+                </div>
+            </div>
+
+            <!-- MAP VIEW -->
+            <div id="view-map">
+                <div class="parking-layout">
+                    <div class="parking-map-card">
+                        <div class="card-header">
+                            <div class="card-title">📍 SMC Parking Zone – A (Main Market Area)</div>
+                            <div style="display:flex;gap:.5rem;align-items:center">
+                                <span class="badge badge-online"><span class="live-dot"></span> Live</span>
+                            </div>
+                        </div>
+                        <svg id="parkingMapSVG" viewBox="0 0 560 360" width="100%" class="parking-map-svg"
+                            style="background:#0a1628;border-radius:12px"></svg>
+                        <div class="map-legend">
+                            <span class="map-leg-item"><span class="leg-color leg-available"></span>Available</span>
+                            <span class="map-leg-item"><span class="leg-color leg-occupied"></span>Occupied</span>
+                            <span class="map-leg-item"><span class="leg-color leg-reserved"></span>Reserved</span>
+                            <span class="map-leg-item"><span class="leg-color leg-disabled"></span>Disabled</span>
+                        </div>
+                        <div id="selectedSlotInfo"
+                            style="display:none;margin-top:1rem;padding:1rem;background:rgba(0,212,255,.05);border:1px solid rgba(0,212,255,.2);border-radius:12px">
+                            <div style="display:flex;justify-content:space-between;align-items:center">
+                                <div>
+                                    <div style="font-weight:700;color:var(--accent-cyan)" id="selSlotName">Slot A-12
+                                    </div>
+                                    <div style="font-size:.8rem;color:var(--text-muted)" id="selSlotType">Standard ·
+                                        Zone A</div>
+                                </div>
+                                <button class="btn btn-primary btn-sm" onclick="openBooking()">Book Now</button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Zone List -->
+                    <div style="display:flex;flex-direction:column;gap:1rem">
+                        <div class="card">
+                            <div class="card-header">
+                                <div class="card-title">📊 Zone Summary</div>
+                            </div>
+                            <div style="display:flex;flex-direction:column;gap:.75rem" id="zoneSummary">
+                                <!-- Populated by JS -->
+                            </div>
+                        </div>
+                        <div class="card">
+                            <div class="card-header">
+                                <div class="card-title">🅿️ Nearby Locations</div>
+                            </div>
+                            <div style="display:flex;flex-direction:column;gap:.5rem" id="nearbyParking">
+                                <!-- Populated by JS -->
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- BOOKING VIEW -->
+            <div id="view-book" style="display:none;max-width:700px;margin:0 auto">
+                <div class="booking-panel">
+                    <h3 style="margin-bottom:1.25rem">📋 Book Your Parking Slot</h3>
+                    <!-- Step Indicator -->
+                    <div class="step-indicator">
+                        <div class="step-dot active" id="step1">
+                            <div class="step-circle">1</div>
+                            <div class="step-name">Select Slot</div>
+                        </div>
+                        <div class="step-dot" id="step2">
+                            <div class="step-circle">2</div>
+                            <div class="step-name">Details</div>
+                        </div>
+                        <div class="step-dot" id="step3">
+                            <div class="step-circle">3</div>
+                            <div class="step-name">Payment</div>
+                        </div>
+                        <div class="step-dot" id="step4">
+                            <div class="step-circle">4</div>
+                            <div class="step-name">QR Ticket</div>
+                        </div>
+                    </div>
+
+                    <!-- Step 1 -->
+                    <div class="booking-step active" id="bStep1">
+                        <div class="form-group">
+                            <label class="form-label">Parking Zone</label>
+                            <select class="form-select" id="bookZone" onchange="updateSlots()">
+                                <option value="A">Zone A — Main Market Area (28 available)</option>
+                                <option value="B">Zone B — Station Road (42 available)</option>
+                                <option value="C">Zone C — Hospital Road (19 available)</option>
+                                <option value="D">Zone D — Bus Stand (67 available)</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label class="form-label">Vehicle Type</label>
+                            <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:.75rem">
+                                <label class="vehicle-option" onclick="selectVehicle(this, 'two')"
+                                    style="background:rgba(0,212,255,.08);border:2px solid var(--accent-cyan);border-radius:12px;padding:.85rem;text-align:center;cursor:pointer">
+                                    <div style="font-size:1.5rem">🛵</div>
+                                    <div style="font-size:.8rem;font-weight:600;margin-top:.25rem">Two Wheeler</div>
+                                    <div style="font-size:.7rem;color:var(--text-muted)">₹10/hr</div>
+                                </label>
+                                <label class="vehicle-option" onclick="selectVehicle(this, 'four')"
+                                    style="border:2px solid var(--border);border-radius:12px;padding:.85rem;text-align:center;cursor:pointer">
+                                    <div style="font-size:1.5rem">🚗</div>
+                                    <div style="font-size:.8rem;font-weight:600;margin-top:.25rem">Four Wheeler</div>
+                                    <div style="font-size:.7rem;color:var(--text-muted)">₹20/hr</div>
+                                </label>
+                                <label class="vehicle-option" onclick="selectVehicle(this, 'heavy')"
+                                    style="border:2px solid var(--border);border-radius:12px;padding:.85rem;text-align:center;cursor:pointer">
+                                    <div style="font-size:1.5rem">🚌</div>
+                                    <div style="font-size:.8rem;font-weight:600;margin-top:.25rem">Heavy Vehicle</div>
+                                    <div style="font-size:.7rem;color:var(--text-muted)">₹50/hr</div>
+                                </label>
+                            </div>
+                        </div>
+                        <label class="form-label">Available Slots</label>
+                        <div class="slots-list" id="slotsList"><!-- JS --></div>
+                        <button class="btn btn-primary" style="width:100%;margin-top:1.25rem"
+                            onclick="goStep(2)">Continue →</button>
+                    </div>
+
+                    <!-- Step 2 -->
+                    <div class="booking-step" id="bStep2">
+                        <div class="form-group"><label class="form-label">Full Name</label><input class="form-input"
+                                placeholder="Enter your full name" id="bName" /></div>
+                        <div class="form-group"><label class="form-label">Mobile Number</label><input class="form-input"
+                                placeholder="+91 XXXXX XXXXX" id="bPhone" /></div>
+                        <div class="form-group"><label class="form-label">Vehicle Number</label><input
+                                class="form-input" placeholder="MH-13-AB-1234" id="bVehicle"
+                                style="font-family:monospace;letter-spacing:2px;font-weight:700"
+                                oninput="this.value=this.value.toUpperCase()" /></div>
+                        <div style="display:grid;grid-template-columns:1fr 1fr;gap:1rem">
+                            <div class="form-group"><label class="form-label">Date</label><input class="form-input"
+                                    type="date" id="bDate" /></div>
+                            <div class="form-group"><label class="form-label">Duration (hours)</label>
+                                <select class="form-select" id="bDuration" onchange="updateCost()">
+                                    <option>1</option>
+                                    <option>2</option>
+                                    <option>3</option>
+                                    <option>4</option>
+                                    <option>6</option>
+                                    <option>8</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div style="display:flex;gap:.75rem">
+                            <button class="btn btn-ghost" style="flex:1" onclick="goStep(1)">← Back</button>
+                            <button class="btn btn-primary" style="flex:2" onclick="goStep(3)">Continue →
+                                Payment</button>
+                        </div>
+                    </div>
+
+                    <!-- Step 3 -->
+                    <div class="booking-step" id="bStep3">
+                        <div class="cost-calc">
+                            <div class="cost-row"><span>Parking Fee</span><span id="costBase">₹20/hr</span></div>
+                            <div class="cost-row"><span>Duration</span><span id="costDuration">2 hours</span></div>
+                            <div class="cost-row"><span>Service Charge</span><span>₹5</span></div>
+                            <div class="cost-row"><span>GST (18%)</span><span id="costGST">₹7.2</span></div>
+                            <div class="cost-row total"><span>Total Amount</span><span id="costTotal">₹52.20</span>
+                            </div>
+                        </div>
+                        <div style="margin:1.25rem 0">
+                            <label class="form-label">Payment Method</label>
+                            <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:.75rem">
+                                <button onclick="selectPayment(this,'upi')" class="pay-option"
+                                    style="border:2px solid var(--accent-cyan);background:rgba(0,212,255,.08);border-radius:12px;padding:.85rem;cursor:pointer;font-size:.85rem;font-weight:600;color:var(--text-primary)">📱
+                                    UPI</button>
+                                <button onclick="selectPayment(this,'card')" class="pay-option"
+                                    style="border:2px solid var(--border);border-radius:12px;padding:.85rem;cursor:pointer;font-size:.85rem;font-weight:600;color:var(--text-secondary)">💳
+                                    Card</button>
+                                <button onclick="selectPayment(this,'cash')" class="pay-option"
+                                    style="border:2px solid var(--border);border-radius:12px;padding:.85rem;cursor:pointer;font-size:.85rem;font-weight:600;color:var(--text-secondary)">💵
+                                    Cash</button>
+                            </div>
+                        </div>
+                        <div style="display:flex;gap:.75rem">
+                            <button class="btn btn-ghost" style="flex:1" onclick="goStep(2)">← Back</button>
+                            <button class="btn btn-primary" style="flex:2" onclick="processPayment()">💳 Pay &
+                                Confirm</button>
+                        </div>
+                    </div>
+
+                    <!-- Step 4 — QR Ticket -->
+                    <div class="booking-step" id="bStep4">
+                        <div style="text-align:center;margin-bottom:1rem">
+                            <div style="color:var(--accent-green);font-size:2.5rem">✅</div>
+                            <h3 style="color:var(--accent-green)">Booking Confirmed!</h3>
+                            <p style="color:var(--text-muted);font-size:.875rem">Your QR ticket has been generated. Show
+                                at entry gate.</p>
+                        </div>
+                        <div class="qr-ticket" id="qrTicket">
+                            <div class="qr-header">🏙️ SOLAPUR SMART PARKING</div>
+                            <div class="qr-sub">SMC Digital Parking Ticket</div>
+                            <div class="qr-code-img">
+                                <svg class="qr-code-svg" viewBox="0 0 120 120" id="qrSVG">
+                                    <!-- QR pattern via JS -->
+                                </svg>
+                            </div>
+                            <hr class="qr-divider" />
+                            <div class="qr-details">
+                                <div class="qr-detail-item">
+                                    <div class="qr-detail-label">SLOT</div>
+                                    <div class="qr-detail-val" id="ticketSlot">A-12</div>
+                                </div>
+                                <div class="qr-detail-item">
+                                    <div class="qr-detail-label">ZONE</div>
+                                    <div class="qr-detail-val" id="ticketZone">Zone A</div>
+                                </div>
+                                <div class="qr-detail-item">
+                                    <div class="qr-detail-label">DATE</div>
+                                    <div class="qr-detail-val" id="ticketDate">23 Feb 2026</div>
+                                </div>
+                                <div class="qr-detail-item">
+                                    <div class="qr-detail-label">DURATION</div>
+                                    <div class="qr-detail-val" id="ticketDuration">2 hrs</div>
+                                </div>
+                                <div class="qr-detail-item">
+                                    <div class="qr-detail-label">VEHICLE</div>
+                                    <div class="qr-detail-val" id="ticketVehicle">MH-13-AB-1234</div>
+                                </div>
+                                <div class="qr-detail-item">
+                                    <div class="qr-detail-label">AMOUNT</div>
+                                    <div class="qr-detail-val" id="ticketAmount">₹52.20</div>
+                                </div>
+                            </div>
+                            <div class="qr-barcode">
+                                <svg class="qr-barcode-svg" viewBox="0 0 200 30">
+                                    <!-- Barcode lines -->
+                                    <script>
+                                        // Barcode will be inline rendered
+                                    </script>
+                                </svg>
+                            </div>
+                            <div style="font-size:.65rem;color:#94a3b8;margin-top:.5rem">Booking ID: <strong
+                                    id="ticketID">SMC-2026-0001</strong></div>
+                        </div>
+                        <div style="display:flex;gap:.75rem;margin-top:1rem">
+                            <button class="btn btn-ghost" style="flex:1" onclick="downloadTicket()">⬇️ Download</button>
+                            <button class="btn btn-primary" style="flex:2" onclick="goStep(1)">✅ Book Another</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- VIOLATIONS VIEW -->
+            <div id="view-illegal" style="display:none">
+                <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:1.25rem">
+                    <h3>🚨 Illegal Parking Detections — Live</h3>
+                    <span class="badge badge-danger" id="violationCount">8 Active</span>
+                </div>
+                <div class="violation-grid" id="violationGrid"><!-- JS --></div>
+            </div>
+
+            <!-- COST CALCULATOR VIEW -->
+            <div id="view-calc" style="display:none;max-width:500px;margin:0 auto">
+                <div class="card">
+                    <h3 style="margin-bottom:1.5rem">💰 Parking Cost Calculator</h3>
+                    <div class="form-group">
+                        <label class="form-label">Vehicle Type</label>
+                        <select class="form-select" id="calcVehicle" onchange="calcCost()">
+                            <option value="10">Two Wheeler – ₹10/hr</option>
+                            <option value="20">Four Wheeler – ₹20/hr</option>
+                            <option value="50">Heavy Vehicle – ₹50/hr</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label">Duration: <span id="calcDurLabel">2 hours</span></label>
+                        <input type="range" min="1" max="12" value="2"
+                            style="width:100%;accent-color:var(--accent-cyan)" id="calcSlider" oninput="calcCost()" />
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label">Parking Zone</label>
+                        <select class="form-select" id="calcZone" onchange="calcCost()">
+                            <option value="1">Zone A — Market Area (Regular)</option>
+                            <option value="1.2">Zone B — Station Area (Premium)</option>
+                            <option value="0.8">Zone D — Bus Stand (Economy)</option>
+                        </select>
+                    </div>
+                    <div class="cost-calc" style="margin-top:1rem">
+                        <div class="cost-row"><span>Base Rate</span><span id="cBase">₹20/hr</span></div>
+                        <div class="cost-row"><span>Zone Multiplier</span><span id="cMult">1.0×</span></div>
+                        <div class="cost-row"><span>Duration</span><span id="cDur">2 hrs</span></div>
+                        <div class="cost-row"><span>Subtotal</span><span id="cSub">₹40.00</span></div>
+                        <div class="cost-row"><span>Service Charge</span><span>₹5.00</span></div>
+                        <div class="cost-row"><span>GST (18%)</span><span id="cGST">₹8.10</span></div>
+                        <div class="cost-row total"><span>💰 Total</span><span id="cTotal">₹53.10</span></div>
+                    </div>
+                    <button class="btn btn-primary" style="width:100%;margin-top:1.25rem"
+                        onclick="switchView('book',null)">
+                        🅿️ Book Now at This Rate
+                    </button>
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+    <!-- Chatbot -->
+    <div class="chatbot-widget" id="chatbotWidget">
+        <div class="chatbot-header">
+            <div class="chat-avatar">🤖</div>
+            <div>
+                <div class="chat-name">ParkingBot AI</div>
+                <div class="chat-status"><span class="live-dot"></span> Online</div>
+            </div><button class="chat-close" onclick="toggleChatbot()">×</button>
+        </div>
+        <div class="chatbot-messages" id="chatMessages">
+            <div class="chat-msg bot">
+                <div class="msg-bubble">Hello! 🅿️ I can help you find and book parking. What do you need?</div>
+            </div>
+        </div>
+        <div class="quick-replies"><button onclick="quickReply('Find parking near me')">Find Parking</button><button
+                onclick="quickReply('parking cost')">Check Cost</button><button
+                onclick="quickReply('illegal parking')">Report Violation</button></div>
+        <div class="chatbot-input"><input type="text" id="chatInput" placeholder="Ask about parking..."
+                onkeypress="chatEnter(event)" /><button onclick="sendChat()"><svg viewBox="0 0 24 24" fill="none"
+                    stroke="currentColor" stroke-width="2">
+                    <line x1="22" y1="2" x2="11" y2="13" />
+                    <polygon points="22 2 15 22 11 13 2 9 22 2" />
+                </svg></button></div>
+    </div>
+    <button class="chatbot-toggle" id="chatbotToggle" onclick="toggleChatbot()"><span class="chat-icon">💬</span><span
+            class="chat-badge" id="chatBadge">1</span></button>
+
+    <script src="js/main.js"></script>
+    <script src="js/parking.js"></script>
+</body>
+
+</html>

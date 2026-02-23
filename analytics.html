@@ -1,0 +1,295 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Analytics – SmartCity Solapur</title>
+    <meta name="description"
+        content="Traffic analytics, congestion prediction, historical data visualizations, and event traffic simulation for Solapur Smart City." />
+    <link
+        href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=Orbitron:wght@400;700;900&display=swap"
+        rel="stylesheet" />
+    <link rel="stylesheet" href="css/style.css" />
+    <link rel="stylesheet" href="css/dashboard.css" />
+</head>
+
+<body>
+    <nav class="navbar" id="navbar">
+        <div class="nav-container">
+            <a href="index.html" class="nav-brand">
+                <div class="brand-icon"><svg viewBox="0 0 40 40" fill="none">
+                        <circle cx="20" cy="20" r="18" stroke="url(#ga1)" stroke-width="2" />
+                        <path d="M10 28 L15 16 L20 22 L25 14 L30 28" stroke="url(#ga2)" stroke-width="2.5"
+                            stroke-linecap="round" stroke-linejoin="round" />
+                        <circle cx="20" cy="12" r="3" fill="#00d4ff" />
+                        <defs>
+                            <linearGradient id="ga1" x1="0" y1="0" x2="40" y2="40">
+                                <stop offset="0%" stop-color="#00d4ff" />
+                                <stop offset="100%" stop-color="#7c3aed" />
+                            </linearGradient>
+                            <linearGradient id="ga2" x1="0" y1="0" x2="40" y2="40">
+                                <stop offset="0%" stop-color="#00d4ff" />
+                                <stop offset="100%" stop-color="#a855f7" />
+                            </linearGradient>
+                        </defs>
+                    </svg></div>
+                <div class="brand-text"><span class="brand-main">SmartCity</span><span class="brand-sub">Solapur</span>
+                </div>
+            </a>
+            <div class="nav-links" id="navLinks">
+                <a href="index.html" class="nav-link" id="nav-home">Home</a>
+                <a href="traffic.html" class="nav-link" id="nav-traffic">Traffic</a>
+                <a href="parking.html" class="nav-link" id="nav-parking">Parking</a>
+                <a href="analytics.html" class="nav-link active" id="nav-analytics">Analytics</a>
+                <a href="admin.html" class="nav-link" id="nav-admin">Admin</a>
+                <a href="citizen.html" class="nav-link" id="nav-citizen">Citizens</a>
+                <a href="about.html" class="nav-link" id="nav-about">About</a>
+            </div>
+            <div class="nav-actions"><button class="theme-toggle" id="themeToggle"><svg id="moonIcon"
+                        viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z" />
+                    </svg><svg id="sunIcon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                        style="display:none">
+                        <circle cx="12" cy="12" r="5" />
+                    </svg></button><button class="sos-btn" id="sosBtn">🆘 SOS</button><button class="hamburger"
+                    id="hamburger"><span></span><span></span><span></span></button></div>
+        </div>
+    </nav>
+    <div id="sosModal" class="modal-overlay">
+        <div class="modal sos-modal">
+            <div class="sos-pulse"></div>
+            <h2>🚨 Emergency SOS</h2>
+            <p>Sending emergency alert...</p>
+            <div class="sos-actions"><button class="btn btn-danger" onclick="callEmergency()">📞 Call
+                    112</button><button class="btn btn-outline" onclick="closeSOS()">Cancel</button></div>
+        </div>
+    </div>
+
+    <div class="page-wrapper">
+        <div class="page-hero">
+            <div class="container">
+                <div class="page-hero-content">
+                    <div>
+                        <h1>📊 Advanced Analytics</h1>
+                        <p>Historical trends · Predictive congestion models · Event traffic simulation · Reporting</p>
+                    </div>
+                    <div class="page-hero-actions">
+                        <select class="form-select"
+                            style="background:var(--bg-card);width:160px;padding:.4rem .75rem;font-size:.85rem"
+                            id="timePeriod" onchange="updateCharts()">
+                            <option value="7">Last 7 days</option>
+                            <option value="30" selected>Last 30 days</option>
+                            <option value="90">Last 90 days</option>
+                        </select>
+                        <button class="btn btn-primary btn-sm" onclick="exportReport()">⬇️ Export Report</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="container" style="padding-top:2rem;padding-bottom:3rem">
+
+            <!-- Summary KPIs -->
+            <div class="kpi-grid" style="margin-bottom:2rem">
+                <div class="kpi-card"
+                    style="--kpi-color:linear-gradient(135deg,#00d4ff,#7c3aed);--kpi-bg:rgba(0,212,255,0.1)">
+                    <div class="kpi-header">
+                        <div class="kpi-icon">🚗</div><span class="kpi-change up">↑ 8%</span>
+                    </div>
+                    <div class="kpi-value">2.4M</div>
+                    <div class="kpi-label">Total Vehicle Trips</div>
+                    <div class="kpi-footer">
+                        <div class="kpi-mini-bar">
+                            <div class="kpi-mini-fill"
+                                style="width:68%;background:linear-gradient(135deg,#00d4ff,#7c3aed)"></div>
+                        </div>
+                    </div>
+                </div>
+                <div class="kpi-card"
+                    style="--kpi-color:linear-gradient(135deg,#22c55e,#06b6d4);--kpi-bg:rgba(34,197,94,0.1)">
+                    <div class="kpi-header">
+                        <div class="kpi-icon">⏱️</div><span class="kpi-change down">↓ 35%</span>
+                    </div>
+                    <div class="kpi-value">4.2<span style="font-size:1rem">min</span></div>
+                    <div class="kpi-label">Avg Wait Reduced</div>
+                    <div class="kpi-footer">
+                        <div class="kpi-mini-bar">
+                            <div class="kpi-mini-fill"
+                                style="width:42%;background:linear-gradient(135deg,#22c55e,#06b6d4)"></div>
+                        </div>
+                    </div>
+                </div>
+                <div class="kpi-card"
+                    style="--kpi-color:linear-gradient(135deg,#f59e0b,#ef4444);--kpi-bg:rgba(245,158,11,0.1)">
+                    <div class="kpi-header">
+                        <div class="kpi-icon">📷</div><span class="kpi-change up">↑ 22%</span>
+                    </div>
+                    <div class="kpi-value">1,284</div>
+                    <div class="kpi-label">Violations Detected</div>
+                    <div class="kpi-footer">
+                        <div class="kpi-mini-bar">
+                            <div class="kpi-mini-fill"
+                                style="width:58%;background:linear-gradient(135deg,#f59e0b,#ef4444)"></div>
+                        </div>
+                    </div>
+                </div>
+                <div class="kpi-card"
+                    style="--kpi-color:linear-gradient(135deg,#7c3aed,#a855f7);--kpi-bg:rgba(124,58,237,0.1)">
+                    <div class="kpi-header">
+                        <div class="kpi-icon">🅿️</div><span class="kpi-change up">↑ 87%</span>
+                    </div>
+                    <div class="kpi-value">8,432</div>
+                    <div class="kpi-label">Parking Bookings</div>
+                    <div class="kpi-footer">
+                        <div class="kpi-mini-bar">
+                            <div class="kpi-mini-fill"
+                                style="width:84%;background:linear-gradient(135deg,#7c3aed,#a855f7)"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Traffic Trends Chart -->
+            <div class="charts-grid" style="margin-bottom:2rem">
+                <div class="chart-card">
+                    <div class="card-header">
+                        <div>
+                            <div class="chart-title">📈 Traffic Volume Trend</div>
+                            <div class="chart-subtitle">30-day vehicle count across all junctions</div>
+                        </div>
+                        <div class="chart-legend">
+                            <span class="legend-item"><span class="legend-dot" style="background:#00d4ff"></span>This
+                                Month</span>
+                            <span class="legend-item"><span class="legend-dot" style="background:#7c3aed"></span>Last
+                                Month</span>
+                        </div>
+                    </div>
+                    <canvas id="trendChart" height="200"></canvas>
+                </div>
+                <div class="chart-card">
+                    <div class="card-header">
+                        <div>
+                            <div class="chart-title">🏆 Top Congestion Spots</div>
+                            <div class="chart-subtitle">Average daily congestion score</div>
+                        </div>
+                    </div>
+                    <canvas id="congestionBarChart" height="200"></canvas>
+                </div>
+            </div>
+
+            <!-- Event Traffic Simulation -->
+            <div class="card" style="margin-bottom:2rem">
+                <div class="card-header">
+                    <div class="card-title">🎉 Festival & Event Traffic Simulation</div>
+                    <span class="badge badge-info">AI Prediction</span>
+                </div>
+                <div style="display:grid;grid-template-columns:1fr 300px;gap:2rem;align-items:start">
+                    <div>
+                        <canvas id="eventChart" height="180"></canvas>
+                    </div>
+                    <div>
+                        <h4 style="margin-bottom:1rem;font-size:.95rem">Upcoming Events Impact</h4>
+                        <div style="display:flex;flex-direction:column;gap:.75rem" id="eventList">
+                            <!-- JS rendered -->
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Historical Data Table -->
+            <div class="card" style="margin-bottom:2rem">
+                <div class="card-header">
+                    <div class="card-title">📋 Historical Traffic Data</div>
+                    <div style="display:flex;gap:.5rem">
+                        <input class="form-input" placeholder="Search..."
+                            style="width:160px;padding:.4rem .7rem;font-size:.85rem" />
+                        <button class="btn btn-ghost btn-sm" onclick="exportReport()">⬇️ CSV</button>
+                    </div>
+                </div>
+                <div style="overflow-x:auto">
+                    <table class="data-table" id="historyTable">
+                        <thead>
+                            <tr>
+                                <th>Date</th>
+                                <th>Junction</th>
+                                <th>Peak Vehicles/hr</th>
+                                <th>Avg Wait</th>
+                                <th>Incidents</th>
+                                <th>Signal Efficiency</th>
+                                <th>Status</th>
+                            </tr>
+                        </thead>
+                        <tbody id="historyBody">
+                            <!-- JS -->
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+            <!-- Weekly Heatmap -->
+            <div class="card" style="margin-bottom:2rem">
+                <div class="card-header">
+                    <div class="card-title">📅 Weekly Traffic Pattern Heatmap</div>
+                    <span class="badge badge-info">30-day average</span>
+                </div>
+                <div id="weeklyHeatmap" style="overflow-x:auto;padding:.5rem 0"></div>
+            </div>
+
+            <!-- Prediction Report -->
+            <div style="display:grid;grid-template-columns:1fr 1fr;gap:1.5rem">
+                <div class="card">
+                    <div class="card-header">
+                        <div class="card-title">🔮 Next Week Prediction</div>
+                    </div>
+                    <canvas id="nextWeekChart" height="180"></canvas>
+                    <div
+                        style="margin-top:1rem;padding:1rem;background:rgba(0,212,255,.05);border:1px solid rgba(0,212,255,.15);border-radius:12px;font-size:.85rem;color:var(--text-secondary)">
+                        <strong style="color:var(--accent-cyan)">AI Insight:</strong> Monday 25 Feb expected 18% higher
+                        traffic — Siddeshwar Yatra weekend effect. Recommend: Deploy 4 extra constables at Hutatma
+                        Chowk, activate adaptive signal mode from 07:00.
+                    </div>
+                </div>
+                <div class="card">
+                    <div class="card-header">
+                        <div class="card-title">💡 Performance Report</div>
+                    </div>
+                    <div style="display:flex;flex-direction:column;gap:1rem" id="perfReport">
+                        <!-- JS -->
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+    <div class="chatbot-widget" id="chatbotWidget">
+        <div class="chatbot-header">
+            <div class="chat-avatar">🤖</div>
+            <div>
+                <div class="chat-name">TrafficBot AI</div>
+                <div class="chat-status"><span class="live-dot"></span> Online</div>
+            </div><button class="chat-close" onclick="toggleChatbot()">×</button>
+        </div>
+        <div class="chatbot-messages" id="chatMessages">
+            <div class="chat-msg bot">
+                <div class="msg-bubble">Viewing analytics! Ask me for traffic insights or predictions.</div>
+            </div>
+        </div>
+        <div class="quick-replies"><button onclick="quickReply('traffic trend')">Traffic Trend</button><button
+                onclick="quickReply('congestion prediction')">Prediction</button></div>
+        <div class="chatbot-input"><input type="text" id="chatInput" placeholder="Ask about data..."
+                onkeypress="chatEnter(event)" /><button onclick="sendChat()"><svg viewBox="0 0 24 24" fill="none"
+                    stroke="currentColor" stroke-width="2">
+                    <line x1="22" y1="2" x2="11" y2="13" />
+                    <polygon points="22 2 15 22 11 13 2 9 22 2" />
+                </svg></button></div>
+    </div>
+    <button class="chatbot-toggle" id="chatbotToggle" onclick="toggleChatbot()"><span class="chat-icon">💬</span><span
+            class="chat-badge" id="chatBadge">1</span></button>
+
+    <script src="js/main.js"></script>
+    <script src="js/analytics.js"></script>
+</body>
+
+</html>

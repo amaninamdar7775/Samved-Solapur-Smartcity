@@ -1,0 +1,679 @@
+/* ==============================
+   HOME PAGE STYLES
+   ============================== */
+
+/* ─── Hero ─── */
+.hero {
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    padding-top: var(--nav-height);
+    position: relative;
+    overflow: hidden;
+    background: var(--gradient-hero);
+}
+
+.hero-bg {
+    position: absolute;
+    inset: 0;
+    z-index: 0;
+}
+
+.grid-overlay {
+    position: absolute;
+    inset: 0;
+    background-image:
+        linear-gradient(rgba(0, 212, 255, 0.04) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(0, 212, 255, 0.04) 1px, transparent 1px);
+    background-size: 60px 60px;
+    animation: gridMove 20s linear infinite;
+}
+
+@keyframes gridMove {
+    from {
+        background-position: 0 0;
+    }
+
+    to {
+        background-position: 60px 60px;
+    }
+}
+
+.particles {
+    position: absolute;
+    inset: 0;
+    overflow: hidden;
+}
+
+.particle {
+    position: absolute;
+    border-radius: 50%;
+    background: var(--accent-cyan);
+    animation: particleFloat linear infinite;
+    opacity: 0;
+}
+
+@keyframes particleFloat {
+    0% {
+        transform: translateY(100vh) scale(0);
+        opacity: 0;
+    }
+
+    10% {
+        opacity: 0.6;
+    }
+
+    90% {
+        opacity: 0.3;
+    }
+
+    100% {
+        transform: translateY(-100px) scale(1);
+        opacity: 0;
+    }
+}
+
+.hero-content {
+    flex: 1;
+    z-index: 1;
+    padding: 2rem 1.5rem 2rem 6%;
+    max-width: 600px;
+}
+
+.hero-visual {
+    flex: 1;
+    z-index: 1;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 2rem 4% 2rem 1rem;
+}
+
+.hero-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    background: rgba(0, 212, 255, 0.08);
+    border: 1px solid rgba(0, 212, 255, 0.2);
+    color: var(--accent-cyan);
+    font-size: 0.78rem;
+    font-weight: 500;
+    padding: 0.4rem 1rem;
+    border-radius: 100px;
+    margin-bottom: 1.5rem;
+    letter-spacing: 0.5px;
+    animation: fadeInUp 0.6s ease;
+}
+
+.badge-dot {
+    width: 6px;
+    height: 6px;
+    border-radius: 50%;
+    background: var(--accent-green);
+    animation: livePulse 1.5s infinite;
+}
+
+.hero-title {
+    display: flex;
+    flex-direction: column;
+    gap: 0.1rem;
+    margin-bottom: 1.25rem;
+    animation: fadeInUp 0.7s ease 0.1s both;
+}
+
+.title-line {
+    display: block;
+    font-family: var(--font-display);
+    font-size: clamp(1.8rem, 4vw, 3rem);
+    font-weight: 900;
+    letter-spacing: -0.5px;
+    line-height: 1.1;
+}
+
+.hero-subtitle {
+    color: var(--text-secondary);
+    font-size: 1.05rem;
+    line-height: 1.7;
+    margin-bottom: 2rem;
+    animation: fadeInUp 0.7s ease 0.2s both;
+}
+
+.hero-stats {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 0.75rem;
+    margin-bottom: 2rem;
+    animation: fadeInUp 0.7s ease 0.3s both;
+}
+
+.stat-card {
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+    border-radius: var(--radius-md);
+    padding: 0.85rem;
+    text-align: center;
+    transition: var(--transition);
+}
+
+.stat-card:hover {
+    border-color: var(--border-glow);
+}
+
+.stat-num {
+    font-family: var(--font-display);
+    font-size: 1.4rem;
+    font-weight: 700;
+    color: var(--accent-cyan);
+    display: block;
+}
+
+.stat-label {
+    font-size: 0.7rem;
+    color: var(--text-muted);
+    margin-top: 0.2rem;
+}
+
+.hero-actions {
+    display: flex;
+    gap: 0.75rem;
+    flex-wrap: wrap;
+    animation: fadeInUp 0.7s ease 0.4s both;
+}
+
+/* ─── City Visual ─── */
+.city-visual {
+    position: relative;
+    max-width: 500px;
+    width: 100%;
+    animation: float 6s ease-in-out infinite;
+}
+
+.city-svg {
+    width: 100%;
+    filter: drop-shadow(0 0 40px rgba(0, 212, 255, 0.2));
+}
+
+.live-badge {
+    position: absolute;
+    top: -12px;
+    right: 12px;
+    background: rgba(239, 68, 68, 0.15);
+    border: 1px solid rgba(239, 68, 68, 0.4);
+    color: #ef4444;
+    font-size: 0.7rem;
+    font-weight: 700;
+    padding: 0.3rem 0.7rem;
+    border-radius: 100px;
+    display: flex;
+    align-items: center;
+    gap: 0.4rem;
+    letter-spacing: 1px;
+}
+
+.float-card {
+    position: absolute;
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+    border-radius: var(--radius-md);
+    padding: 0.65rem 0.9rem;
+    display: flex;
+    align-items: center;
+    gap: 0.65rem;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
+    animation: fadeInUp 0.8s ease both;
+}
+
+.fc-icon {
+    font-size: 1.4rem;
+}
+
+.fc-label {
+    font-size: 0.7rem;
+    color: var(--text-muted);
+}
+
+.fc-value {
+    font-size: 0.85rem;
+    font-weight: 700;
+    color: var(--text-primary);
+}
+
+.fc-value.green {
+    color: var(--accent-green);
+}
+
+.fc-value.yellow {
+    color: var(--accent-amber);
+}
+
+.card-1 {
+    bottom: 60px;
+    left: -20px;
+    animation-delay: 0.6s;
+}
+
+.card-2 {
+    top: 20px;
+    left: -10px;
+    animation-delay: 0.8s;
+}
+
+.card-3 {
+    top: 30px;
+    right: -10px;
+    animation-delay: 1s;
+}
+
+.signal-red {
+    animation: redBlink 3s infinite;
+}
+
+.signal-green {
+    animation: greenGlow 2s infinite;
+}
+
+@keyframes redBlink {
+
+    0%,
+    100% {
+        fill: #ef4444;
+    }
+
+    50% {
+        fill: #7f1d1d;
+    }
+}
+
+@keyframes greenGlow {
+
+    0%,
+    100% {
+        fill: #22c55e;
+        filter: drop-shadow(0 0 4px #22c55e);
+    }
+
+    50% {
+        fill: #166534;
+        filter: none;
+    }
+}
+
+/* ─── Features Grid ─── */
+.features-section {
+    background: var(--bg-secondary);
+    position: relative;
+    overflow: hidden;
+}
+
+.features-section::before {
+    content: '';
+    position: absolute;
+    top: -100px;
+    right: -100px;
+    width: 400px;
+    height: 400px;
+    border-radius: 50%;
+    background: radial-gradient(circle, rgba(124, 58, 237, 0.08), transparent);
+    pointer-events: none;
+}
+
+.features-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 1.5rem;
+}
+
+.feature-card {
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+    border-radius: var(--radius-lg);
+    padding: 2rem;
+    transition: var(--transition);
+    cursor: pointer;
+    text-decoration: none;
+    color: inherit;
+    position: relative;
+    overflow: hidden;
+}
+
+.feature-card::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(135deg, transparent, rgba(0, 212, 255, 0.03));
+    opacity: 0;
+    transition: var(--transition);
+}
+
+.feature-card:hover {
+    border-color: var(--border-glow);
+    transform: translateY(-4px);
+    box-shadow: 0 12px 40px rgba(0, 212, 255, 0.1);
+    color: inherit;
+}
+
+.feature-card:hover::before {
+    opacity: 1;
+}
+
+.feat-icon {
+    width: 52px;
+    height: 52px;
+    border-radius: var(--radius-md);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 1.25rem;
+}
+
+.feat-icon svg {
+    width: 26px;
+    height: 26px;
+    stroke: white;
+}
+
+.feature-card h3 {
+    margin-bottom: 0.75rem;
+    font-size: 1.1rem;
+}
+
+.feature-card p {
+    color: var(--text-secondary);
+    font-size: 0.9rem;
+    line-height: 1.6;
+    margin-bottom: 1.25rem;
+}
+
+.feat-tags {
+    display: flex;
+    gap: 0.4rem;
+    flex-wrap: wrap;
+    margin-bottom: 1rem;
+}
+
+.feat-tags span {
+    background: var(--bg-secondary);
+    border: 1px solid var(--border);
+    color: var(--text-muted);
+    font-size: 0.7rem;
+    padding: 0.2rem 0.6rem;
+    border-radius: 100px;
+}
+
+.feat-arrow {
+    font-size: 1.2rem;
+    color: var(--accent-cyan);
+    font-weight: 700;
+    opacity: 0;
+    transition: var(--transition);
+}
+
+.feature-card:hover .feat-arrow {
+    opacity: 1;
+    transform: translateX(4px);
+}
+
+/* ─── Problem Section ─── */
+.problem-section {
+    background: var(--bg-primary);
+}
+
+.problem-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 5rem;
+    align-items: center;
+}
+
+.problem-content h2 {
+    margin-bottom: 1rem;
+}
+
+.problem-desc {
+    color: var(--text-secondary);
+    line-height: 1.7;
+    margin-bottom: 2rem;
+}
+
+.problem-stats {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1rem;
+}
+
+.prob-stat {
+    display: flex;
+    align-items: flex-start;
+    gap: 0.75rem;
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+    border-radius: var(--radius-md);
+    padding: 1rem;
+}
+
+.prob-icon {
+    font-size: 1.5rem;
+    flex-shrink: 0;
+}
+
+.prob-stat strong {
+    display: block;
+    font-size: 1.1rem;
+    color: var(--accent-cyan);
+    font-family: var(--font-display);
+}
+
+.prob-stat span {
+    font-size: 0.8rem;
+    color: var(--text-muted);
+}
+
+.solution-card {
+    background: linear-gradient(135deg, rgba(0, 212, 255, 0.05), rgba(124, 58, 237, 0.05));
+    border: 1px solid var(--border-glow);
+    border-radius: var(--radius-xl);
+    padding: 2.5rem;
+}
+
+.solution-card h3 {
+    margin-bottom: 1.5rem;
+    font-size: 1.3rem;
+}
+
+.solution-list {
+    list-style: none;
+    display: flex;
+    flex-direction: column;
+    gap: 0.85rem;
+    margin-bottom: 1.75rem;
+}
+
+.solution-list li {
+    display: flex;
+    align-items: flex-start;
+    gap: 0.75rem;
+    color: var(--text-secondary);
+    font-size: 0.95rem;
+    line-height: 1.5;
+}
+
+.check {
+    color: var(--accent-green);
+    font-weight: 700;
+    flex-shrink: 0;
+    margin-top: 0.1rem;
+}
+
+.impact-badges {
+    display: flex;
+    gap: 0.5rem;
+    flex-wrap: wrap;
+}
+
+.impact-badges span {
+    background: var(--gradient-primary);
+    color: white;
+    font-size: 0.78rem;
+    font-weight: 600;
+    padding: 0.35rem 0.85rem;
+    border-radius: 100px;
+}
+
+/* ─── IoT Section ─── */
+.iot-section {
+    background: var(--bg-secondary);
+}
+
+.iot-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 1.25rem;
+}
+
+.iot-card {
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+    border-radius: var(--radius-lg);
+    padding: 1.5rem;
+    position: relative;
+    transition: var(--transition);
+}
+
+.iot-card:hover {
+    border-color: var(--border-glow);
+    transform: translateY(-2px);
+}
+
+.iot-icon {
+    font-size: 2rem;
+    margin-bottom: 0.85rem;
+}
+
+.iot-status {
+    position: absolute;
+    top: 1.25rem;
+    right: 1.25rem;
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+}
+
+.iot-status.online {
+    background: var(--accent-green);
+    animation: livePulse 1.5s infinite;
+}
+
+.iot-status.warning {
+    background: var(--accent-amber);
+    animation: livePulse 1s infinite;
+}
+
+.iot-status.offline {
+    background: var(--accent-red);
+}
+
+.iot-card h4 {
+    font-size: 0.95rem;
+    margin-bottom: 0.35rem;
+}
+
+.iot-count {
+    font-family: var(--font-display);
+    font-size: 1.1rem;
+    font-weight: 700;
+    color: var(--accent-cyan);
+    margin-bottom: 0.85rem;
+}
+
+.iot-bar {
+    background: var(--bg-secondary);
+    border-radius: 100px;
+    height: 5px;
+    overflow: hidden;
+    margin-bottom: 0.5rem;
+}
+
+.iot-fill {
+    height: 100%;
+    border-radius: 100px;
+    background: var(--gradient-primary);
+}
+
+.iot-fill.warning {
+    background: linear-gradient(135deg, #f59e0b, #ef4444);
+}
+
+.iot-meta {
+    font-size: 0.75rem;
+    color: var(--text-muted);
+}
+
+/* ─── Responsive ─── */
+@media (max-width: 1024px) {
+    .hero {
+        flex-direction: column;
+        align-items: flex-start;
+    }
+
+    .hero-content {
+        max-width: 100%;
+        padding: 2rem 1.5rem;
+    }
+
+    .hero-visual {
+        width: 100%;
+        padding: 0 1.5rem 2rem;
+        justify-content: center;
+    }
+
+    .features-grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+
+    .iot-grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+
+    .problem-grid {
+        grid-template-columns: 1fr;
+        gap: 2.5rem;
+    }
+}
+
+@media (max-width: 768px) {
+    .hero-stats {
+        grid-template-columns: repeat(2, 1fr);
+    }
+
+    .features-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .iot-grid {
+        grid-template-columns: 1fr 1fr;
+    }
+
+    .problem-stats {
+        grid-template-columns: 1fr;
+    }
+
+    .card-1,
+    .card-2,
+    .card-3 {
+        display: none;
+    }
+}
+
+@media (max-width: 480px) {
+    .iot-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .hero-stats {
+        grid-template-columns: repeat(2, 1fr);
+    }
+
+    .hero-actions {
+        flex-direction: column;
+    }
+}

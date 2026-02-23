@@ -1,0 +1,656 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>SmartCity Solapur – Traffic & Parking Management System</title>
+    <meta name="description"
+        content="Smart Traffic and Parking Management System for Solapur Municipal Corporation – AI-powered, IoT-integrated urban mobility solution for Solapur Smart City." />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+        href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=Orbitron:wght@400;700;900&display=swap"
+        rel="stylesheet" />
+    <link rel="stylesheet" href="css/style.css" />
+    <link rel="stylesheet" href="css/home.css" />
+    <link rel="icon"
+        href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🏙️</text></svg>" />
+</head>
+
+<body>
+    <!-- Navigation -->
+    <nav class="navbar" id="navbar">
+        <div class="nav-container">
+            <a href="index.html" class="nav-brand">
+                <div class="brand-icon">
+                    <svg viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <circle cx="20" cy="20" r="18" stroke="url(#grad)" stroke-width="2" />
+                        <path d="M10 28 L15 16 L20 22 L25 14 L30 28" stroke="url(#grad2)" stroke-width="2.5"
+                            stroke-linecap="round" stroke-linejoin="round" />
+                        <circle cx="20" cy="12" r="3" fill="#00d4ff" />
+                        <defs>
+                            <linearGradient id="grad" x1="0" y1="0" x2="40" y2="40">
+                                <stop offset="0%" stop-color="#00d4ff" />
+                                <stop offset="100%" stop-color="#7c3aed" />
+                            </linearGradient>
+                            <linearGradient id="grad2" x1="0" y1="0" x2="40" y2="40">
+                                <stop offset="0%" stop-color="#00d4ff" />
+                                <stop offset="100%" stop-color="#a855f7" />
+                            </linearGradient>
+                        </defs>
+                    </svg>
+                </div>
+                <div class="brand-text">
+                    <span class="brand-main">SmartCity</span>
+                    <span class="brand-sub">Solapur</span>
+                </div>
+            </a>
+            <div class="nav-links" id="navLinks">
+                <a href="index.html" class="nav-link active" id="nav-home">Home</a>
+                <a href="traffic.html" class="nav-link" id="nav-traffic">Traffic</a>
+                <a href="parking.html" class="nav-link" id="nav-parking">Parking</a>
+                <a href="analytics.html" class="nav-link" id="nav-analytics">Analytics</a>
+                <a href="admin.html" class="nav-link" id="nav-admin">Admin</a>
+                <a href="citizen.html" class="nav-link" id="nav-citizen">Citizens</a>
+                <a href="about.html" class="nav-link" id="nav-about">About</a>
+            </div>
+            <div class="nav-actions">
+                <button class="theme-toggle" id="themeToggle" title="Toggle Theme">
+                    <svg id="moonIcon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z" />
+                    </svg>
+                    <svg id="sunIcon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                        style="display:none">
+                        <circle cx="12" cy="12" r="5" />
+                        <line x1="12" y1="1" x2="12" y2="3" />
+                        <line x1="12" y1="21" x2="12" y2="23" />
+                        <line x1="4.22" y1="4.22" x2="5.64" y2="5.64" />
+                        <line x1="18.36" y1="18.36" x2="19.78" y2="19.78" />
+                        <line x1="1" y1="12" x2="3" y2="12" />
+                        <line x1="21" y1="12" x2="23" y2="12" />
+                        <line x1="4.22" y1="19.78" x2="5.64" y2="18.36" />
+                        <line x1="18.36" y1="5.64" x2="19.78" y2="4.22" />
+                    </svg>
+                </button>
+                <button class="sos-btn" id="sosBtn" title="Emergency SOS">🆘 SOS</button>
+                <button class="hamburger" id="hamburger">
+                    <span></span><span></span><span></span>
+                </button>
+            </div>
+        </div>
+    </nav>
+
+    <!-- SOS Modal -->
+    <div class="modal-overlay" id="sosModal">
+        <div class="modal sos-modal">
+            <div class="sos-pulse"></div>
+            <h2>🚨 Emergency SOS</h2>
+            <p>Sending emergency alert to Solapur Traffic Control Center...</p>
+            <div class="sos-info">
+                <div class="sos-item"><span>📍 Location:</span> Detecting GPS...</div>
+                <div class="sos-item"><span>🚔 Nearest Police:</span> Solapur City Police HQ – 1.2 km</div>
+                <div class="sos-item"><span>🏥 Nearest Hospital:</span> Civil Hospital – 2.4 km</div>
+                <div class="sos-item"><span>🚒 Fire Brigade:</span> Main Station – 1.8 km</div>
+            </div>
+            <div class="sos-actions">
+                <button class="btn btn-danger" onclick="callEmergency()">📞 Call 112</button>
+                <button class="btn btn-outline" onclick="closeSOS()">Cancel</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Hero Section -->
+    <section class="hero" id="hero">
+        <div class="hero-bg">
+            <div class="grid-overlay"></div>
+            <div class="particles" id="particles"></div>
+        </div>
+        <div class="hero-content">
+            <div class="hero-badge">
+                <span class="badge-dot"></span>
+                Smart City Hackathon 2025 – Solapur Municipal Corporation
+            </div>
+            <h1 class="hero-title">
+                <span class="title-line">Smart Traffic &</span>
+                <span class="title-line gradient-text">Parking Management</span>
+                <span class="title-line">System</span>
+            </h1>
+            <p class="hero-subtitle">
+                AI-powered · IoT-integrated · Real-time monitoring solution for <strong>Solapur Smart City</strong> —
+                transforming urban mobility, reducing congestion, and enabling intelligent parking for 1.2 million
+                citizens.
+            </p>
+            <div class="hero-stats">
+                <div class="stat-card">
+                    <div class="stat-num" data-target="432">0</div>
+                    <div class="stat-label">Traffic Sensors</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-num" data-target="1240">0</div>
+                    <div class="stat-label">Parking Slots</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-num" data-target="98">0</div>
+                    <div class="stat-label">% Uptime</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-num" data-target="34">0</div>
+                    <div class="stat-label">Smart Signals</div>
+                </div>
+            </div>
+            <div class="hero-actions">
+                <a href="traffic.html" class="btn btn-primary">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <path
+                            d="M9 20l-5.447-2.724A1 1 0 013 16.382V5.618a1 1 0 011.447-.894L9 7m0 13l6-3m-6-10l6-3m6 16l-5.447 2.724A1 1 0 0115 19.382V8.618a1 1 0 011.447-.894L21 10m0 9V10" />
+                    </svg>
+                    Live Dashboard
+                </a>
+                <a href="parking.html" class="btn btn-secondary">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <rect x="5" y="2" width="14" height="20" rx="2" />
+                        <path d="M9 8h4a2 2 0 010 4H9v-4z" />
+                        <line x1="9" y1="16" x2="15" y2="16" />
+                    </svg>
+                    Find Parking
+                </a>
+                <a href="about.html" class="btn btn-ghost">Learn More →</a>
+            </div>
+        </div>
+        <div class="hero-visual">
+            <div class="city-visual">
+                <svg class="city-svg" viewBox="0 0 500 400" xmlns="http://www.w3.org/2000/svg">
+                    <!-- Roads -->
+                    <rect x="0" y="190" width="500" height="20" fill="#1e293b" />
+                    <rect x="240" y="0" width="20" height="400" fill="#1e293b" />
+                    <!-- Road markings -->
+                    <line x1="0" y1="200" x2="500" y2="200" stroke="#f59e0b" stroke-width="1"
+                        stroke-dasharray="20,15" />
+                    <line x1="250" y1="0" x2="250" y2="400" stroke="#f59e0b" stroke-width="1"
+                        stroke-dasharray="20,15" />
+                    <!-- Buildings left block -->
+                    <rect x="20" y="100" width="60" height="80" rx="3" fill="#0f172a" stroke="#00d4ff"
+                        stroke-width="1" />
+                    <rect x="30" y="90" width="40" height="10" rx="2" fill="#1e3a5f" />
+                    <!-- windows -->
+                    <rect x="28" y="110" width="8" height="8" rx="1" fill="#00d4ff" opacity="0.8" />
+                    <rect x="42" y="110" width="8" height="8" rx="1" fill="#00d4ff" opacity="0.6" />
+                    <rect x="56" y="110" width="8" height="8" rx="1" fill="#7c3aed" opacity="0.8" />
+                    <rect x="28" y="125" width="8" height="8" rx="1" fill="#7c3aed" opacity="0.6" />
+                    <rect x="42" y="125" width="8" height="8" rx="1" fill="#00d4ff" opacity="0.8" />
+                    <rect x="56" y="125" width="8" height="8" rx="1" fill="#00d4ff" opacity="0.4" />
+                    <rect x="28" y="140" width="8" height="8" rx="1" fill="#00d4ff" opacity="0.9" />
+                    <rect x="42" y="140" width="8" height="8" rx="1" fill="#7c3aed" opacity="0.7" />
+                    <rect x="56" y="140" width="8" height="8" rx="1" fill="#00d4ff" opacity="0.5" />
+                    <!-- Tall building -->
+                    <rect x="95" y="50" width="50" height="130" rx="3" fill="#0f172a" stroke="#7c3aed"
+                        stroke-width="1" />
+                    <rect x="105" y="60" width="8" height="8" rx="1" fill="#7c3aed" opacity="0.9" />
+                    <rect x="120" y="60" width="8" height="8" rx="1" fill="#00d4ff" opacity="0.7" />
+                    <rect x="135" y="60" width="8" height="8" rx="1" fill="#7c3aed" opacity="0.5" />
+                    <rect x="105" y="75" width="8" height="8" rx="1" fill="#00d4ff" opacity="0.8" />
+                    <rect x="120" y="75" width="8" height="8" rx="1" fill="#7c3aed" opacity="0.9" />
+                    <rect x="135" y="75" width="8" height="8" rx="1" fill="#00d4ff" opacity="0.6" />
+                    <rect x="105" y="90" width="8" height="8" rx="1" fill="#f59e0b" opacity="0.7" />
+                    <rect x="120" y="90" width="8" height="8" rx="1" fill="#00d4ff" opacity="0.8" />
+                    <rect x="135" y="90" width="8" height="8" rx="1" fill="#7c3aed" opacity="0.5" />
+                    <rect x="105" y="105" width="8" height="8" rx="1" fill="#00d4ff" opacity="0.6" />
+                    <rect x="120" y="105" width="8" height="8" rx="1" fill="#f59e0b" opacity="0.8" />
+                    <rect x="135" y="105" width="8" height="8" rx="1" fill="#00d4ff" opacity="0.7" />
+                    <rect x="105" y="120" width="8" height="8" rx="1" fill="#7c3aed" opacity="0.9" />
+                    <rect x="120" y="120" width="8" height="8" rx="1" fill="#00d4ff" opacity="0.5" />
+                    <rect x="135" y="120" width="8" height="8" rx="1" fill="#f59e0b" opacity="0.6" />
+                    <rect x="105" y="135" width="8" height="8" rx="1" fill="#00d4ff" opacity="0.8" />
+                    <rect x="120" y="135" width="8" height="8" rx="1" fill="#7c3aed" opacity="0.7" />
+                    <rect x="135" y="135" width="8" height="8" rx="1" fill="#00d4ff" opacity="0.4" />
+                    <!-- right side buildings -->
+                    <rect x="280" y="80" width="55" height="100" rx="3" fill="#0f172a" stroke="#00d4ff"
+                        stroke-width="1" />
+                    <rect x="290" y="90" width="8" height="8" rx="1" fill="#00d4ff" opacity="0.9" />
+                    <rect x="305" y="90" width="8" height="8" rx="1" fill="#7c3aed" opacity="0.7" />
+                    <rect x="320" y="90" width="8" height="8" rx="1" fill="#00d4ff" opacity="0.5" />
+                    <rect x="290" y="105" width="8" height="8" rx="1" fill="#f59e0b" opacity="0.8" />
+                    <rect x="305" y="105" width="8" height="8" rx="1" fill="#00d4ff" opacity="0.6" />
+                    <rect x="320" y="105" width="8" height="8" rx="1" fill="#7c3aed" opacity="0.9" />
+                    <rect x="290" y="120" width="8" height="8" rx="1" fill="#00d4ff" opacity="0.7" />
+                    <rect x="305" y="120" width="8" height="8" rx="1" fill="#f59e0b" opacity="0.5" />
+                    <rect x="320" y="120" width="8" height="8" rx="1" fill="#00d4ff" opacity="0.8" />
+                    <rect x="290" y="135" width="8" height="8" rx="1" fill="#7c3aed" opacity="0.6" />
+                    <rect x="305" y="135" width="8" height="8" rx="1" fill="#00d4ff" opacity="0.9" />
+                    <rect x="320" y="135" width="8" height="8" rx="1" fill="#f59e0b" opacity="0.7" />
+                    <!-- Tall right building -->
+                    <rect x="350" y="40" width="65" height="140" rx="3" fill="#0f172a" stroke="#a855f7"
+                        stroke-width="1" />
+                    <rect x="360" y="55" width="8" height="8" rx="1" fill="#a855f7" opacity="0.9" />
+                    <rect x="375" y="55" width="8" height="8" rx="1" fill="#00d4ff" opacity="0.7" />
+                    <rect x="390" y="55" width="8" height="8" rx="1" fill="#a855f7" opacity="0.5" />
+                    <rect x="405" y="55" width="8" height="8" rx="1" fill="#00d4ff" opacity="0.8" />
+                    <rect x="360" y="70" width="8" height="8" rx="1" fill="#00d4ff" opacity="0.6" />
+                    <rect x="375" y="70" width="8" height="8" rx="1" fill="#f59e0b" opacity="0.9" />
+                    <rect x="390" y="70" width="8" height="8" rx="1" fill="#00d4ff" opacity="0.7" />
+                    <rect x="405" y="70" width="8" height="8" rx="1" fill="#a855f7" opacity="0.8" />
+                    <!-- Traffic signals at intersection -->
+                    <rect x="228" y="168" width="8" height="30" rx="2" fill="#334155" />
+                    <rect x="224" y="160" width="16" height="10" rx="2" fill="#1e293b" />
+                    <circle cx="232" cy="163" r="3" fill="#ef4444" class="signal-red" />
+                    <!-- Green signal bottom-right from intersection -->
+                    <rect x="264" y="190" width="8" height="30" rx="2" fill="#334155" />
+                    <rect x="260" y="218" width="16" height="10" rx="2" fill="#1e293b" />
+                    <circle cx="268" cy="225" r="3" fill="#22c55e" class="signal-green" />
+                    <!-- Parking signs -->
+                    <rect x="155" y="195" width="20" height="25" rx="3" fill="#1e40af" />
+                    <text x="165" y="211" text-anchor="middle" fill="white" font-size="12" font-weight="bold">P</text>
+                    <rect x="330" y="210" width="20" height="25" rx="3" fill="#1e40af" />
+                    <text x="340" y="226" text-anchor="middle" fill="white" font-size="12" font-weight="bold">P</text>
+                    <!-- Cars -->
+                    <rect x="200" y="193" width="20" height="10" rx="2" fill="#ef4444" />
+                    <rect x="160" y="198" width="18" height="9" rx="2" fill="#3b82f6" />
+                    <rect x="270" y="195" width="18" height="9" rx="2" fill="#22c55e" />
+                    <rect x="310" y="198" width="20" height="9" rx="2" fill="#f59e0b" />
+                    <!-- Add sensor indicators -->
+                    <circle cx="50" cy="190" r="5" fill="none" stroke="#00d4ff" stroke-width="1.5" opacity="0.8">
+                        <animate attributeName="r" values="5;10;5" dur="2s" repeatCount="indefinite" />
+                        <animate attributeName="opacity" values="0.8;0.2;0.8" dur="2s" repeatCount="indefinite" />
+                    </circle>
+                    <circle cx="200" cy="190" r="5" fill="none" stroke="#f59e0b" stroke-width="1.5" opacity="0.8">
+                        <animate attributeName="r" values="5;10;5" dur="2.5s" repeatCount="indefinite" />
+                        <animate attributeName="opacity" values="0.8;0.2;0.8" dur="2.5s" repeatCount="indefinite" />
+                    </circle>
+                    <circle cx="380" cy="190" r="5" fill="none" stroke="#22c55e" stroke-width="1.5" opacity="0.8">
+                        <animate attributeName="r" values="5;10;5" dur="1.8s" repeatCount="indefinite" />
+                        <animate attributeName="opacity" values="0.8;0.2;0.8" dur="1.8s" repeatCount="indefinite" />
+                    </circle>
+                    <circle cx="250" cy="100" r="5" fill="none" stroke="#a855f7" stroke-width="1.5" opacity="0.8">
+                        <animate attributeName="r" values="5;10;5" dur="3s" repeatCount="indefinite" />
+                        <animate attributeName="opacity" values="0.8;0.2;0.8" dur="3s" repeatCount="indefinite" />
+                    </circle>
+                    <!-- Data flow lines -->
+                    <line x1="50" y1="185" x2="250" y2="100" stroke="#00d4ff" stroke-width="0.5" opacity="0.3"
+                        stroke-dasharray="5,5">
+                        <animate attributeName="stroke-dashoffset" values="0;-20" dur="1s" repeatCount="indefinite" />
+                    </line>
+                    <line x1="380" y1="185" x2="250" y2="100" stroke="#22c55e" stroke-width="0.5" opacity="0.3"
+                        stroke-dasharray="5,5">
+                        <animate attributeName="stroke-dashoffset" values="0;-20" dur="1.5s" repeatCount="indefinite" />
+                    </line>
+                    <!-- Labels -->
+                    <text x="250" y="95" text-anchor="middle" fill="#00d4ff" font-size="8"
+                        font-family="Orbitron">CTRL</text>
+                    <text x="50" y="183" text-anchor="middle" fill="#00d4ff" font-size="7"
+                        font-family="Orbitron">S-01</text>
+                    <text x="380" y="183" text-anchor="middle" fill="#22c55e" font-size="7"
+                        font-family="Orbitron">S-03</text>
+                    <!-- Bottom buildings -->
+                    <rect x="30" y="230" width="70" height="60" rx="3" fill="#0f172a" stroke="#7c3aed"
+                        stroke-width="1" />
+                    <rect x="40" y="240" width="8" height="8" rx="1" fill="#7c3aed" opacity="0.8" />
+                    <rect x="55" y="240" width="8" height="8" rx="1" fill="#00d4ff" opacity="0.6" />
+                    <rect x="70" y="240" width="8" height="8" rx="1" fill="#7c3aed" opacity="0.4" />
+                    <rect x="40" y="255" width="8" height="8" rx="1" fill="#00d4ff" opacity="0.7" />
+                    <rect x="55" y="255" width="8" height="8" rx="1" fill="#7c3aed" opacity="0.9" />
+                    <rect x="70" y="255" width="8" height="8" rx="1" fill="#00d4ff" opacity="0.5" />
+                    <rect x="300" y="225" width="80" height="70" rx="3" fill="#0f172a" stroke="#00d4ff"
+                        stroke-width="1" />
+                    <rect x="310" y="235" width="8" height="8" rx="1" fill="#00d4ff" opacity="0.9" />
+                    <rect x="325" y="235" width="8" height="8" rx="1" fill="#f59e0b" opacity="0.7" />
+                    <rect x="340" y="235" width="8" height="8" rx="1" fill="#00d4ff" opacity="0.5" />
+                    <rect x="355" y="235" width="8" height="8" rx="1" fill="#7c3aed" opacity="0.8" />
+                    <rect x="310" y="250" width="8" height="8" rx="1" fill="#f59e0b" opacity="0.6" />
+                    <rect x="325" y="250" width="8" height="8" rx="1" fill="#00d4ff" opacity="0.8" />
+                    <rect x="340" y="250" width="8" height="8" rx="1" fill="#f59e0b" opacity="0.9" />
+                    <rect x="355" y="250" width="8" height="8" rx="1" fill="#00d4ff" opacity="0.7" />
+                </svg>
+                <!-- Live indicator -->
+                <div class="live-badge">
+                    <span class="live-dot"></span> LIVE MONITOR
+                </div>
+                <!-- Floating info cards -->
+                <div class="float-card card-1">
+                    <div class="fc-icon">🚦</div>
+                    <div>
+                        <div class="fc-label">Signal Status</div>
+                        <div class="fc-value green">Optimized</div>
+                    </div>
+                </div>
+                <div class="float-card card-2">
+                    <div class="fc-icon">🅿️</div>
+                    <div>
+                        <div class="fc-label">Parking Available</div>
+                        <div class="fc-value">284 / 400</div>
+                    </div>
+                </div>
+                <div class="float-card card-3">
+                    <div class="fc-icon">⚡</div>
+                    <div>
+                        <div class="fc-label">Avg Wait Time</div>
+                        <div class="fc-value yellow">2.4 min</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Features Section -->
+    <section class="features-section section">
+        <div class="container">
+            <div class="section-header">
+                <span class="section-tag">Core Capabilities</span>
+                <h2 class="section-title">Everything You Need for <span class="gradient-text">Smart Urban
+                        Mobility</span></h2>
+                <p class="section-subtitle">An integrated platform combining AI, IoT, and real-time analytics to solve
+                    Solapur's traffic & parking challenges.</p>
+            </div>
+            <div class="features-grid">
+                <a href="traffic.html" class="feature-card" id="feat-traffic">
+                    <div class="feat-icon" style="background: linear-gradient(135deg, #ef4444, #f97316)">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <circle cx="12" cy="12" r="10" />
+                            <path d="M12 8v4l3 3" />
+                        </svg>
+                    </div>
+                    <h3>Traffic Monitoring</h3>
+                    <p>Real-time traffic density tracking across all major junctions with AI-driven congestion
+                        prediction and automated signal management.</p>
+                    <div class="feat-tags">
+                        <span>AI Signals</span><span>Heatmaps</span><span>Alerts</span>
+                    </div>
+                    <div class="feat-arrow">→</div>
+                </a>
+                <a href="parking.html" class="feature-card" id="feat-parking">
+                    <div class="feat-icon" style="background: linear-gradient(135deg, #22c55e, #06b6d4)">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <rect x="5" y="2" width="14" height="20" rx="2" />
+                            <path d="M9 8h4a2 2 0 010 4H9z" />
+                        </svg>
+                    </div>
+                    <h3>Smart Parking</h3>
+                    <p>Book parking slots online, view real-time availability, detect illegal parking, and get QR-based
+                        entry tickets instantly.</p>
+                    <div class="feat-tags">
+                        <span>Online Booking</span><span>QR Tickets</span><span>IoT Sensors</span>
+                    </div>
+                    <div class="feat-arrow">→</div>
+                </a>
+                <a href="traffic.html#ai-control" class="feature-card" id="feat-ai">
+                    <div class="feat-icon" style="background: linear-gradient(135deg, #7c3aed, #a855f7)">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5" />
+                        </svg>
+                    </div>
+                    <h3>AI Traffic Control</h3>
+                    <p>Adaptive signal timing, emergency vehicle priority routing, and automated violation detection
+                        powered by computer vision.</p>
+                    <div class="feat-tags">
+                        <span>Adaptive Signals</span><span>Emergency Route</span><span>Violations</span>
+                    </div>
+                    <div class="feat-arrow">→</div>
+                </a>
+                <a href="analytics.html" class="feature-card" id="feat-analytics">
+                    <div class="feat-icon" style="background: linear-gradient(135deg, #f59e0b, #ef4444)">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <line x1="18" y1="20" x2="18" y2="10" />
+                            <line x1="12" y1="20" x2="12" y2="4" />
+                            <line x1="6" y1="20" x2="6" y2="14" />
+                        </svg>
+                    </div>
+                    <h3>Advanced Analytics</h3>
+                    <p>Historical trends, predictive congestion models, festival traffic simulation, and comprehensive
+                        reporting dashboards.</p>
+                    <div class="feat-tags">
+                        <span>Predictive</span><span>Historical</span><span>Reports</span>
+                    </div>
+                    <div class="feat-arrow">→</div>
+                </a>
+                <a href="admin.html" class="feature-card" id="feat-admin">
+                    <div class="feat-icon" style="background: linear-gradient(135deg, #06b6d4, #3b82f6)">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <circle cx="12" cy="8" r="4" />
+                            <path d="M20 21a8 8 0 10-16 0" />
+                        </svg>
+                    </div>
+                    <h3>Admin Control</h3>
+                    <p>Centralized control room for traffic operators with live camera feeds simulation, complaint
+                        management, and system oversight.</p>
+                    <div class="feat-tags">
+                        <span>Control Room</span><span>Complaints</span><span>Alerts</span>
+                    </div>
+                    <div class="feat-arrow">→</div>
+                </a>
+                <a href="citizen.html" class="feature-card" id="feat-citizen">
+                    <div class="feat-icon" style="background: linear-gradient(135deg, #10b981, #059669)">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <path d="M17 21v-2a4 4 0 00-4-4H5a4 4 0 00-4 4v2" />
+                            <circle cx="9" cy="7" r="4" />
+                            <path d="M23 21v-2a4 4 0 00-3-3.87" />
+                            <path d="M16 3.13a4 4 0 010 7.75" />
+                        </svg>
+                    </div>
+                    <h3>Citizen Services</h3>
+                    <p>Report traffic issues, get route suggestions, receive smart alerts, and provide parking feedback
+                        — all from your phone.</p>
+                    <div class="feat-tags">
+                        <span>Report Issues</span><span>Smart Alerts</span><span>Feedback</span>
+                    </div>
+                    <div class="feat-arrow">→</div>
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Problem Statement -->
+    <section class="problem-section section">
+        <div class="container">
+            <div class="problem-grid">
+                <div class="problem-content">
+                    <span class="section-tag">Problem Statement</span>
+                    <h2>Solapur's Urban <span class="gradient-text">Traffic Crisis</span></h2>
+                    <p class="problem-desc">Solapur, a rapidly growing city with 1.2M+ population, faces severe urban
+                        mobility challenges. The existing infrastructure is overwhelmed by increasing vehicle density,
+                        causing massive delays and pollution.</p>
+                    <div class="problem-stats">
+                        <div class="prob-stat"><span class="prob-icon">⏱️</span>
+                            <div><strong>42 min</strong><span>Average peak-hour delay</span></div>
+                        </div>
+                        <div class="prob-stat"><span class="prob-icon">🚗</span>
+                            <div><strong>3.2L+</strong><span>Registered vehicles in Solapur</span></div>
+                        </div>
+                        <div class="prob-stat"><span class="prob-icon">💨</span>
+                            <div><strong>PM2.5 ↑68%</strong><span>Traffic-related pollution</span></div>
+                        </div>
+                        <div class="prob-stat"><span class="prob-icon">🅿️</span>
+                            <div><strong>73%</strong><span>Illegal parking incidents</span></div>
+                        </div>
+                    </div>
+                </div>
+                <div class="solution-content">
+                    <div class="solution-card">
+                        <h3>💡 Our Solution</h3>
+                        <ul class="solution-list">
+                            <li><span class="check">✓</span> Adaptive AI traffic signal control reducing wait times by
+                                up to 35%</li>
+                            <li><span class="check">✓</span> IoT-based smart parking reducing search time from 15 min to
+                                2 min</li>
+                            <li><span class="check">✓</span> Computer vision for automated violation detection</li>
+                            <li><span class="check">✓</span> Emergency vehicle priority corridors via central command
+                            </li>
+                            <li><span class="check">✓</span> Predictive analytics for festival & event traffic
+                                management</li>
+                            <li><span class="check">✓</span> Citizen app for real-time route guidance and parking
+                                booking</li>
+                        </ul>
+                        <div class="impact-badges">
+                            <span>35% Less Congestion</span>
+                            <span>87% Faster Parking</span>
+                            <span>Zero Manual Signals</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- IoT Sensors Section -->
+    <section class="iot-section section">
+        <div class="container">
+            <div class="section-header">
+                <span class="section-tag">Infrastructure</span>
+                <h2>IoT Sensor <span class="gradient-text">Network</span></h2>
+                <p class="section-subtitle">Real-time data collection from 432 intelligent sensors across Solapur's road
+                    network.</p>
+            </div>
+            <div class="iot-grid">
+                <div class="iot-card" id="iot-1">
+                    <div class="iot-icon">📡</div>
+                    <div class="iot-status online"></div>
+                    <h4>Traffic Sensors</h4>
+                    <div class="iot-count">128 Active</div>
+                    <div class="iot-bar">
+                        <div class="iot-fill" style="width:94%"></div>
+                    </div>
+                    <div class="iot-meta">94% operational · Last sync: 2s ago</div>
+                </div>
+                <div class="iot-card" id="iot-2">
+                    <div class="iot-icon">🅿️</div>
+                    <div class="iot-status online"></div>
+                    <h4>Parking Sensors</h4>
+                    <div class="iot-count">240 Active</div>
+                    <div class="iot-bar">
+                        <div class="iot-fill" style="width:88%"></div>
+                    </div>
+                    <div class="iot-meta">88% operational · Last sync: 5s ago</div>
+                </div>
+                <div class="iot-card" id="iot-3">
+                    <div class="iot-icon">📷</div>
+                    <div class="iot-status online"></div>
+                    <h4>CCTV Cameras</h4>
+                    <div class="iot-count">64 Active</div>
+                    <div class="iot-bar">
+                        <div class="iot-fill" style="width:100%"></div>
+                    </div>
+                    <div class="iot-meta">100% operational · Live</div>
+                </div>
+                <div class="iot-card" id="iot-4">
+                    <div class="iot-icon">💨</div>
+                    <div class="iot-status warning"></div>
+                    <h4>Air Quality Sensors</h4>
+                    <div class="iot-count">32 Active</div>
+                    <div class="iot-bar warning">
+                        <div class="iot-fill warning" style="width:75%"></div>
+                    </div>
+                    <div class="iot-meta">75% operational · Calibrating</div>
+                </div>
+                <div class="iot-card" id="iot-5">
+                    <div class="iot-icon">🔊</div>
+                    <div class="iot-status online"></div>
+                    <h4>Noise Sensors</h4>
+                    <div class="iot-count">24 Active</div>
+                    <div class="iot-bar">
+                        <div class="iot-fill" style="width:91%"></div>
+                    </div>
+                    <div class="iot-meta">91% operational · Last sync: 8s ago</div>
+                </div>
+                <div class="iot-card" id="iot-6">
+                    <div class="iot-icon">🚦</div>
+                    <div class="iot-status online"></div>
+                    <h4>Smart Signals</h4>
+                    <div class="iot-count">34 Active</div>
+                    <div class="iot-bar">
+                        <div class="iot-fill" style="width:97%"></div>
+                    </div>
+                    <div class="iot-meta">97% operational · AI-controlled</div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- AI Chatbot -->
+    <div class="chatbot-widget" id="chatbotWidget">
+        <div class="chatbot-header">
+            <div class="chat-avatar">🤖</div>
+            <div>
+                <div class="chat-name">TrafficBot AI</div>
+                <div class="chat-status"><span class="live-dot"></span> Online</div>
+            </div>
+            <button class="chat-close" onclick="toggleChatbot()">×</button>
+        </div>
+        <div class="chatbot-messages" id="chatMessages">
+            <div class="chat-msg bot">
+                <div class="msg-bubble">Hi! I'm TrafficBot 🤖 Ask me about traffic conditions, parking availability, or
+                    route suggestions in Solapur!</div>
+            </div>
+        </div>
+        <div class="quick-replies">
+            <button onclick="quickReply('Traffic status?')">Traffic Status</button>
+            <button onclick="quickReply('Find parking near me')">Find Parking</button>
+            <button onclick="quickReply('Best route to station?')">Best Route</button>
+        </div>
+        <div class="chatbot-input">
+            <input type="text" id="chatInput" placeholder="Ask about traffic..." onkeypress="chatEnter(event)" />
+            <button onclick="sendChat()">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <line x1="22" y1="2" x2="11" y2="13" />
+                    <polygon points="22 2 15 22 11 13 2 9 22 2" />
+                </svg>
+            </button>
+        </div>
+    </div>
+    <button class="chatbot-toggle" id="chatbotToggle" onclick="toggleChatbot()">
+        <span class="chat-icon">💬</span>
+        <span class="chat-badge" id="chatBadge">1</span>
+    </button>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-grid">
+                <div class="footer-brand">
+                    <div class="brand-text">
+                        <span class="brand-main">SmartCity</span>
+                        <span class="brand-sub">Solapur</span>
+                    </div>
+                    <p>Intelligent Traffic & Parking Management System for Solapur Municipal Corporation. Smart City
+                        Hackathon 2025 Project.</p>
+                    <div class="footer-tags">
+                        <span>🏙️ Smart City</span>
+                        <span>🤖 AI-Powered</span>
+                        <span>📡 IoT</span>
+                    </div>
+                </div>
+                <div class="footer-links">
+                    <h4>Quick Links</h4>
+                    <a href="index.html">Home</a>
+                    <a href="traffic.html">Traffic Dashboard</a>
+                    <a href="parking.html">Smart Parking</a>
+                    <a href="analytics.html">Analytics</a>
+                    <a href="admin.html">Admin Panel</a>
+                    <a href="citizen.html">Citizen Services</a>
+                    <a href="about.html">About Project</a>
+                </div>
+                <div class="footer-links">
+                    <h4>Emergency</h4>
+                    <a href="tel:112">🚨 Emergency: 112</a>
+                    <a href="tel:100">🚔 Police: 100</a>
+                    <a href="tel:108">🏥 Ambulance: 108</a>
+                    <a href="tel:101">🚒 Fire: 101</a>
+                    <a href="tel:1800">📞 Traffic Helpline: 1800-SOLAPUR</a>
+                </div>
+                <div class="footer-contact">
+                    <h4>Contact</h4>
+                    <p>📍 Solapur Municipal Corporation<br />Solapur, Maharashtra – 413001</p>
+                    <p>📧 traffic@solapurmc.gov.in</p>
+                    <p>🕐 Control Room: 24/7</p>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>© 2025 Smart City Solapur – Hackathon Project. Built for Solapur Municipal Corporation.</p>
+                <p>Made with ❤️ for Smart India | <a href="about.html">Team Details</a></p>
+            </div>
+        </div>
+    </footer>
+
+    <script src="js/main.js"></script>
+    <script src="js/home.js"></script>
+</body>
+
+</html>

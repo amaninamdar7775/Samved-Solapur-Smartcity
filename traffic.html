@@ -1,0 +1,488 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Traffic Dashboard – SmartCity Solapur</title>
+    <meta name="description"
+        content="Real-time traffic monitoring dashboard for Solapur Smart City – live signal status, congestion heatmaps, and AI traffic control." />
+    <link
+        href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=Orbitron:wght@400;700;900&display=swap"
+        rel="stylesheet" />
+    <link rel="stylesheet" href="css/style.css" />
+    <link rel="stylesheet" href="css/dashboard.css" />
+</head>
+
+<body>
+    <!-- Navbar -->
+    <nav class="navbar" id="navbar">
+        <div class="nav-container">
+            <a href="index.html" class="nav-brand">
+                <div class="brand-icon">
+                    <svg viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <circle cx="20" cy="20" r="18" stroke="url(#g1)" stroke-width="2" />
+                        <path d="M10 28 L15 16 L20 22 L25 14 L30 28" stroke="url(#g2)" stroke-width="2.5"
+                            stroke-linecap="round" stroke-linejoin="round" />
+                        <circle cx="20" cy="12" r="3" fill="#00d4ff" />
+                        <defs>
+                            <linearGradient id="g1" x1="0" y1="0" x2="40" y2="40">
+                                <stop offset="0%" stop-color="#00d4ff" />
+                                <stop offset="100%" stop-color="#7c3aed" />
+                            </linearGradient>
+                            <linearGradient id="g2" x1="0" y1="0" x2="40" y2="40">
+                                <stop offset="0%" stop-color="#00d4ff" />
+                                <stop offset="100%" stop-color="#a855f7" />
+                            </linearGradient>
+                        </defs>
+                    </svg>
+                </div>
+                <div class="brand-text"><span class="brand-main">SmartCity</span><span class="brand-sub">Solapur</span>
+                </div>
+            </a>
+            <div class="nav-links" id="navLinks">
+                <a href="index.html" class="nav-link" id="nav-home">Home</a>
+                <a href="traffic.html" class="nav-link active" id="nav-traffic">Traffic</a>
+                <a href="parking.html" class="nav-link" id="nav-parking">Parking</a>
+                <a href="analytics.html" class="nav-link" id="nav-analytics">Analytics</a>
+                <a href="admin.html" class="nav-link" id="nav-admin">Admin</a>
+                <a href="citizen.html" class="nav-link" id="nav-citizen">Citizens</a>
+                <a href="about.html" class="nav-link" id="nav-about">About</a>
+            </div>
+            <div class="nav-actions">
+                <button class="theme-toggle" id="themeToggle"><svg id="moonIcon" viewBox="0 0 24 24" fill="none"
+                        stroke="currentColor" stroke-width="2">
+                        <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z" />
+                    </svg><svg id="sunIcon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                        style="display:none">
+                        <circle cx="12" cy="12" r="5" />
+                        <line x1="12" y1="1" x2="12" y2="3" />
+                        <line x1="12" y1="21" x2="12" y2="23" />
+                        <line x1="4.22" y1="4.22" x2="5.64" y2="5.64" />
+                        <line x1="18.36" y1="18.36" x2="19.78" y2="19.78" />
+                        <line x1="1" y1="12" x2="3" y2="12" />
+                        <line x1="21" y1="12" x2="23" y2="12" />
+                        <line x1="4.22" y1="19.78" x2="5.64" y2="18.36" />
+                        <line x1="18.36" y1="5.64" x2="19.78" y2="4.22" />
+                    </svg></button>
+                <button class="sos-btn" id="sosBtn">🆘 SOS</button>
+                <button class="hamburger" id="hamburger"><span></span><span></span><span></span></button>
+            </div>
+        </div>
+    </nav>
+    <div id="sosModal" class="modal-overlay">
+        <div class="modal sos-modal">
+            <div class="sos-pulse"></div>
+            <h2>🚨 Emergency SOS</h2>
+            <p>Sending emergency alert to Solapur Traffic Control Center...</p>
+            <div class="sos-info">
+                <div class="sos-item"><span>📍 Location:</span> Detecting GPS...</div>
+                <div class="sos-item"><span>🚔 Nearest Police:</span> Solapur City Police HQ – 1.2 km</div>
+                <div class="sos-item"><span>🏥 Nearest Hospital:</span> Civil Hospital – 2.4 km</div>
+            </div>
+            <div class="sos-actions"><button class="btn btn-danger" onclick="callEmergency()">📞 Call
+                    112</button><button class="btn btn-outline" onclick="closeSOS()">Cancel</button></div>
+        </div>
+    </div>
+
+    <div class="page-wrapper">
+        <!-- Page Hero -->
+        <div class="page-hero">
+            <div class="container">
+                <div class="page-hero-content">
+                    <div>
+                        <h1>🚦 Traffic Monitoring Dashboard</h1>
+                        <p>Live data from 432 IoT sensors across Solapur road network · Updated every 5 seconds</p>
+                    </div>
+                    <div class="page-hero-actions">
+                        <span class="badge badge-online"><span class="live-dot"></span> LIVE</span>
+                        <span class="live-clock badge badge-info">00:00:00</span>
+                        <a href="#ai-control" class="btn btn-primary btn-sm">⚡ AI Control</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="container">
+            <div class="dashboard-layout">
+                <!-- Sidebar -->
+                <aside class="dashboard-sidebar">
+                    <div class="sidebar-section">
+                        <div class="sidebar-section-title">Monitoring</div>
+                        <button class="sidebar-item active" onclick="showSection('overview', this)">
+                            <span class="item-icon">📊</span> Overview
+                        </button>
+                        <button class="sidebar-item" onclick="showSection('signals', this)">
+                            <span class="item-icon">🚦</span> Signal Status
+                        </button>
+                        <button class="sidebar-item" onclick="showSection('heatmap', this)">
+                            <span class="item-icon">🗺️</span> Congestion Map
+                        </button>
+                        <button class="sidebar-item" onclick="showSection('alerts', this)">
+                            <span class="item-icon">🔔</span> Live Alerts
+                            <span class="item-badge" id="alertBadge">3</span>
+                        </button>
+                    </div>
+                    <div class="sidebar-section">
+                        <div class="sidebar-section-title">Environment</div>
+                        <button class="sidebar-item" onclick="showSection('pollution', this)">
+                            <span class="item-icon">💨</span> Air Quality
+                        </button>
+                        <button class="sidebar-item" onclick="showSection('prediction', this)">
+                            <span class="item-icon">🔮</span> Peak Prediction
+                        </button>
+                    </div>
+                    <div class="sidebar-section">
+                        <div class="sidebar-section-title">AI Control</div>
+                        <a href="#ai-control" class="sidebar-item">
+                            <span class="item-icon">🤖</span> Adaptive Signals
+                        </a>
+                        <a href="#ai-control" class="sidebar-item">
+                            <span class="item-icon">🚑</span> Emergency Routes
+                        </a>
+                        <a href="#ai-control" class="sidebar-item">
+                            <span class="item-icon">📷</span> Violations
+                        </a>
+                    </div>
+                </aside>
+
+                <!-- Main Content -->
+                <main class="dashboard-main">
+
+                    <!-- ─── KPI Cards ─── -->
+                    <div class="kpi-grid">
+                        <div class="kpi-card"
+                            style="--kpi-color: linear-gradient(135deg,#ef4444,#f97316); --kpi-bg: rgba(239,68,68,0.1)">
+                            <div class="kpi-header">
+                                <div class="kpi-icon">🚗</div>
+                                <span class="kpi-change up" id="kpiVehicles">↑ 12%</span>
+                            </div>
+                            <div class="kpi-value" id="kpiVehiclesVal">8,432</div>
+                            <div class="kpi-label">Vehicles / Hour</div>
+                            <div class="kpi-footer">
+                                <div class="kpi-mini-bar">
+                                    <div class="kpi-mini-fill"
+                                        style="width:72%; background: linear-gradient(135deg,#ef4444,#f97316)"></div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="kpi-card"
+                            style="--kpi-color: linear-gradient(135deg,#f59e0b,#ef4444); --kpi-bg: rgba(245,158,11,0.1)">
+                            <div class="kpi-header">
+                                <div class="kpi-icon">⏱️</div>
+                                <span class="kpi-change down" id="kpiWait">↓ 8%</span>
+                            </div>
+                            <div class="kpi-value" id="kpiWaitVal">4.2<span style="font-size:1rem">min</span></div>
+                            <div class="kpi-label">Avg Signal Wait</div>
+                            <div class="kpi-footer">
+                                <div class="kpi-mini-bar">
+                                    <div class="kpi-mini-fill"
+                                        style="width:55%; background: linear-gradient(135deg,#f59e0b,#f97316)"></div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="kpi-card"
+                            style="--kpi-color: linear-gradient(135deg,#22c55e,#06b6d4); --kpi-bg: rgba(34,197,94,0.1)">
+                            <div class="kpi-header">
+                                <div class="kpi-icon">🚦</div>
+                                <span class="kpi-change neutral">— 0%</span>
+                            </div>
+                            <div class="kpi-value" id="kpiSignals">31/34</div>
+                            <div class="kpi-label">Signals Active</div>
+                            <div class="kpi-footer">
+                                <div class="kpi-mini-bar">
+                                    <div class="kpi-mini-fill"
+                                        style="width:91%; background: linear-gradient(135deg,#22c55e,#06b6d4)"></div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="kpi-card"
+                            style="--kpi-color: linear-gradient(135deg,#7c3aed,#a855f7); --kpi-bg: rgba(124,58,237,0.1)">
+                            <div class="kpi-header">
+                                <div class="kpi-icon">💨</div>
+                                <span class="kpi-change up" id="kpiAQI">↑ AQI</span>
+                            </div>
+                            <div class="kpi-value" id="kpiAQIVal">87</div>
+                            <div class="kpi-label">Air Quality Index</div>
+                            <div class="kpi-footer">
+                                <div class="kpi-mini-bar">
+                                    <div class="kpi-mini-fill"
+                                        style="width:43%; background: linear-gradient(135deg,#7c3aed,#a855f7)"></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- ─── Traffic Density Chart ─── -->
+                    <div class="charts-grid">
+                        <div class="chart-card">
+                            <div class="card-header">
+                                <div>
+                                    <div class="chart-title">📈 Traffic Density – Today</div>
+                                    <div class="chart-subtitle">Vehicles per hour across major junctions</div>
+                                </div>
+                                <div class="chart-legend">
+                                    <span class="legend-item"><span class="legend-dot"
+                                            style="background:#00d4ff"></span>Akkalkot Rd</span>
+                                    <span class="legend-item"><span class="legend-dot"
+                                            style="background:#a855f7"></span>Vijapur Rd</span>
+                                    <span class="legend-item"><span class="legend-dot"
+                                            style="background:#22c55e"></span>Station Rd</span>
+                                </div>
+                            </div>
+                            <canvas id="trafficChart" height="200"></canvas>
+                        </div>
+                        <div class="chart-card">
+                            <div class="card-header">
+                                <div>
+                                    <div class="chart-title">🔴 Congestion Distribution</div>
+                                    <div class="chart-subtitle">By zone type</div>
+                                </div>
+                            </div>
+                            <div class="donut-wrapper">
+                                <div class="donut-svg-wrap">
+                                    <svg id="donutChart" viewBox="0 0 160 160" width="160" height="160"></svg>
+                                    <div class="donut-center">
+                                        <div class="donut-center-val" id="donutCenter">68%</div>
+                                        <div class="donut-center-sub">Congested</div>
+                                    </div>
+                                </div>
+                                <div class="donut-legend" id="donutLegend"></div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- ─── Signal Status ─── -->
+                    <div class="card" style="margin-bottom:2rem">
+                        <div class="card-header">
+                            <div class="card-title">🚦 Live Signal Status – Major Junctions</div>
+                            <span class="badge badge-online"><span class="live-dot"></span> AI Optimized</span>
+                        </div>
+                        <div class="signals-grid" id="signalsGrid">
+                            <!-- Populated by JS -->
+                        </div>
+                    </div>
+
+                    <!-- ─── Congestion Heatmap ─── -->
+                    <div class="chart-card" style="margin-bottom:2rem">
+                        <div class="card-header">
+                            <div>
+                                <div class="chart-title">🗺️ Solapur Congestion Heatmap</div>
+                                <div class="chart-subtitle">Real-time traffic intensity across road network</div>
+                            </div>
+                            <div style="display:flex;gap:.5rem">
+                                <span
+                                    style="font-size:.75rem;color:var(--text-muted);align-self:center">Intensity:</span>
+                                <span
+                                    style="background:rgba(34,197,94,.3);border:1px solid #22c55e;border-radius:4px;padding:.15rem .5rem;font-size:.72rem">Low</span>
+                                <span
+                                    style="background:rgba(245,158,11,.3);border:1px solid #f59e0b;border-radius:4px;padding:.15rem .5rem;font-size:.72rem">Med</span>
+                                <span
+                                    style="background:rgba(239,68,68,.3);border:1px solid #ef4444;border-radius:4px;padding:.15rem .5rem;font-size:.72rem">High</span>
+                            </div>
+                        </div>
+                        <svg id="heatmapSVG" viewBox="0 0 700 340" width="100%"
+                            style="border-radius:12px;background:#0a1628"></svg>
+                    </div>
+
+                    <!-- ─── Alert Feed ─── -->
+                    <div class="card" style="margin-bottom:2rem">
+                        <div class="card-header">
+                            <div class="card-title">🔔 Live Traffic Alerts</div>
+                            <button class="btn btn-ghost btn-sm" onclick="clearAlerts()">Clear All</button>
+                        </div>
+                        <div class="alert-feed" id="alertFeed">
+                            <!-- Populated by JS -->
+                        </div>
+                    </div>
+
+                    <!-- ─── Pollution Widget ─── -->
+                    <div class="card" style="margin-bottom:2rem">
+                        <div class="card-header">
+                            <div class="card-title">💨 Air Quality Monitor</div>
+                            <span class="badge badge-warning">Moderate</span>
+                        </div>
+                        <div class="pollution-gauges">
+                            <div class="gauge-item">
+                                <div class="gauge-value" style="color:#f59e0b" id="pm25Val">34</div>
+                                <div class="gauge-label">PM2.5 (µg/m³)</div>
+                                <div class="gauge-bar">
+                                    <div class="gauge-fill moderate" id="pm25Bar" style="width:57%"></div>
+                                </div>
+                            </div>
+                            <div class="gauge-item">
+                                <div class="gauge-value" style="color:#22c55e" id="pm10Val">62</div>
+                                <div class="gauge-label">PM10 (µg/m³)</div>
+                                <div class="gauge-bar">
+                                    <div class="gauge-fill good" id="pm10Bar" style="width:41%"></div>
+                                </div>
+                            </div>
+                            <div class="gauge-item">
+                                <div class="gauge-value" style="color:#ef4444" id="no2Val">48</div>
+                                <div class="gauge-label">NO₂ (ppb)</div>
+                                <div class="gauge-bar">
+                                    <div class="gauge-fill poor" id="no2Bar" style="width:64%"></div>
+                                </div>
+                            </div>
+                        </div>
+                        <div style="margin-top:1rem;padding-top:1rem;border-top:1px solid var(--border)">
+                            <canvas id="pollutionChart" height="80"></canvas>
+                        </div>
+                    </div>
+
+                    <!-- ─── Peak Hour Prediction ─── -->
+                    <div class="card" style="margin-bottom:2rem">
+                        <div class="card-header">
+                            <div class="card-title">🔮 Peak Hour Traffic Prediction</div>
+                            <span class="badge badge-info">AI Model — 93% accuracy</span>
+                        </div>
+                        <canvas id="predictionChart" height="120"></canvas>
+                        <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:.75rem;margin-top:1.25rem">
+                            <div
+                                style="background:rgba(239,68,68,.08);border:1px solid rgba(239,68,68,.2);border-radius:12px;padding:.85rem;text-align:center">
+                                <div style="font-size:.7rem;color:var(--text-muted);margin-bottom:.25rem">Morning Peak
+                                </div>
+                                <div
+                                    style="font-family:var(--font-display);color:#ef4444;font-size:1.1rem;font-weight:700">
+                                    08:00–10:00</div>
+                                <div style="font-size:.75rem;color:var(--text-muted)">HIGH congestion expected</div>
+                            </div>
+                            <div
+                                style="background:rgba(34,197,94,.08);border:1px solid rgba(34,197,94,.2);border-radius:12px;padding:.85rem;text-align:center">
+                                <div style="font-size:.7rem;color:var(--text-muted);margin-bottom:.25rem">Off-Peak</div>
+                                <div
+                                    style="font-family:var(--font-display);color:#22c55e;font-size:1.1rem;font-weight:700">
+                                    11:00–16:00</div>
+                                <div style="font-size:.75rem;color:var(--text-muted)">LOW — ideal for travel</div>
+                            </div>
+                            <div
+                                style="background:rgba(245,158,11,.08);border:1px solid rgba(245,158,11,.2);border-radius:12px;padding:.85rem;text-align:center">
+                                <div style="font-size:.7rem;color:var(--text-muted);margin-bottom:.25rem">Evening Peak
+                                </div>
+                                <div
+                                    style="font-family:var(--font-display);color:#f59e0b;font-size:1.1rem;font-weight:700">
+                                    17:00–20:00</div>
+                                <div style="font-size:.75rem;color:var(--text-muted)">MEDIUM — plan ahead</div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- ─── AI Traffic Control ─── -->
+                    <div id="ai-control">
+                        <div class="ai-panel">
+                            <div class="ai-panel-header">
+                                <div class="ai-avatar">🤖</div>
+                                <div>
+                                    <div class="ai-title">AI Traffic Control Engine</div>
+                                    <div class="ai-sub">Real-time adaptive signal management · Emergency routing ·
+                                        Violation detection</div>
+                                </div>
+                                <span class="badge badge-online" style="margin-left:auto"><span class="live-dot"></span>
+                                    Active</span>
+                            </div>
+                            <div class="ai-controls">
+                                <div class="ai-control-item">
+                                    <h4>⚡ Adaptive Signal Timing</h4>
+                                    <p>AI adjusts signal durations every 30s based on real-time vehicle density,
+                                        reducing wait by up to 35%.</p>
+                                    <div class="toggle-switch">
+                                        <div class="switch on" id="adaptiveSwitch" onclick="toggleAI(this, 'adaptive')">
+                                        </div>
+                                        <span class="switch-label" id="adaptiveLabel">Enabled — 31 signals</span>
+                                    </div>
+                                    <div
+                                        style="margin-top:.75rem;background:var(--bg-secondary);border-radius:8px;padding:.75rem">
+                                        <div style="font-size:.75rem;color:var(--text-muted);margin-bottom:.4rem">Live
+                                            Optimization Score</div>
+                                        <div class="progress-bar">
+                                            <div class="progress-fill" id="optimScoreBar" style="width:78%"></div>
+                                        </div>
+                                        <div style="font-size:.7rem;color:var(--accent-cyan);margin-top:.3rem">78%
+                                            efficiency ↑ from 62% base</div>
+                                    </div>
+                                </div>
+                                <div class="ai-control-item">
+                                    <h4>🚑 Emergency Vehicle Priority</h4>
+                                    <p>Auto-clears corridors for ambulances, fire trucks, and police vehicles via GPS
+                                        tracking and signal override.</p>
+                                    <div class="toggle-switch">
+                                        <div class="switch on" id="emergencySwitch"
+                                            onclick="toggleAI(this, 'emergency')"></div>
+                                        <span class="switch-label" id="emergencyLabel">Active — Monitoring GPS</span>
+                                    </div>
+                                    <button class="btn btn-secondary btn-sm" style="margin-top:.75rem;width:100%"
+                                        onclick="simulateEmergency()">
+                                        🚑 Simulate Emergency Route
+                                    </button>
+                                </div>
+                                <div class="ai-control-item">
+                                    <h4>🗺️ Route Optimization</h4>
+                                    <p>Real-time route suggestions for citizens based on current congestion, incidents,
+                                        and road closures.</p>
+                                    <div style="font-size:.8rem;color:var(--text-secondary);margin-top:.5rem">
+                                        <div
+                                            style="padding:.5rem;background:var(--bg-secondary);border-radius:8px;margin-bottom:.4rem">
+                                            🟢 <strong>Fastest:</strong> Vijapur Rd → Hotgi Rd → Destination (12 min)
+                                        </div>
+                                        <div style="padding:.5rem;background:var(--bg-secondary);border-radius:8px">
+                                            🔵 <strong>Alternate:</strong> Bhigwan Rd → Ring Rd (16 min, less
+                                            congestion)
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="ai-control-item">
+                                    <h4>📷 Violation Detection</h4>
+                                    <p>Computer vision AI identifies red light violations, wrong-way drivers, and
+                                        illegal parking in real-time.</p>
+                                    <div class="toggle-switch" style="margin-bottom:.75rem">
+                                        <div class="switch on" id="violationSwitch"
+                                            onclick="toggleAI(this, 'violation')"></div>
+                                        <span class="switch-label" id="violationLabel">Active — 64 cameras</span>
+                                    </div>
+                                    <div id="violationFeed"
+                                        style="display:flex;flex-direction:column;gap:.4rem;max-height:120px;overflow-y:auto;font-size:.75rem">
+                                        <!-- Populated by JS -->
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                </main>
+            </div>
+        </div>
+    </div>
+
+    <!-- Chatbot -->
+    <div class="chatbot-widget" id="chatbotWidget">
+        <div class="chatbot-header">
+            <div class="chat-avatar">🤖</div>
+            <div>
+                <div class="chat-name">TrafficBot AI</div>
+                <div class="chat-status"><span class="live-dot"></span> Online</div>
+            </div><button class="chat-close" onclick="toggleChatbot()">×</button>
+        </div>
+        <div class="chatbot-messages" id="chatMessages">
+            <div class="chat-msg bot">
+                <div class="msg-bubble">I can see you're on the Traffic Dashboard! Ask me about any junction's status.
+                </div>
+            </div>
+        </div>
+        <div class="quick-replies"><button onclick="quickReply('Signal status?')">Signal Status</button><button
+                onclick="quickReply('Congestion report')">Congestion</button><button
+                onclick="quickReply('Accident alert?')">Accidents</button></div>
+        <div class="chatbot-input"><input type="text" id="chatInput" placeholder="Ask about traffic..."
+                onkeypress="chatEnter(event)" /><button onclick="sendChat()"><svg viewBox="0 0 24 24" fill="none"
+                    stroke="currentColor" stroke-width="2">
+                    <line x1="22" y1="2" x2="11" y2="13" />
+                    <polygon points="22 2 15 22 11 13 2 9 22 2" />
+                </svg></button></div>
+    </div>
+    <button class="chatbot-toggle" id="chatbotToggle" onclick="toggleChatbot()"><span class="chat-icon">💬</span><span
+            class="chat-badge" id="chatBadge">1</span></button>
+
+    <script src="js/main.js"></script>
+    <script src="js/traffic.js"></script>
+</body>
+
+</html>
